@@ -1,0 +1,82 @@
+﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <IsPackable>false</IsPackable>
+    <PackageTargetFallback>%3bnet461%3bportable-net45+win8</PackageTargetFallback>
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Files not to show in IDE -->
+    <None Remove="Client\app\services\signup.service.ts" />
+    <None Remove="Client\app\services\user.service.ts" />
+    <None Remove="Client\app\shared\fade-in.animation.ts" />
+    <None Remove="Client\app\shared\loader.component.ts" />
+    <None Remove="Client\app\shared\truncate.pipe.ts" />
+    <None Remove="yarn.lock" />
+    <Compile Remove="Client\app\guards\**" />
+    <Compile Remove="Client\app\public\components\**" />
+    <Compile Remove="Client\app\public\services\**" />
+    <Content Remove="wwwroot\dist\**" />
+    <None Remove="Client\app\guards\**" />
+    <None Remove="Client\app\public\components\**" />
+    <None Remove="Client\app\public\services\**" />
+    <None Remove="Client\dist\**" />
+    <Content Remove="coverage\**" />
+
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Content Remove="Client\**" />
+    <EmbeddedResource Remove="Client\app\guards\**" />
+    <EmbeddedResource Remove="Client\app\public\components\**" />
+    <EmbeddedResource Remove="Client\app\public\services\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Client\tsconfig.browser.json" />
+    <Content Include="Client\tsconfig.server.aot.json" />
+    <Content Include="Client\tsconfig.server.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.SnapshotCollector" Version="1.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.0-preview2-final" />
+    <PackageReference Include="Microsoft.Composition" Version="1.0.31" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0-preview2-final" />
+    <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LevinBlog.Database\LevinBlog.Database.csproj" />
+    <ProjectReference Include="..\LevinBlog.Model\LevinBlog.Model.csproj" />
+    <ProjectReference Include="..\LevinBlog.Repository\LevinBlog.Repository.csproj" />
+    <ProjectReference Include="..\LevinBlog.Service\LevinBlog.Service.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Client\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="Client\app\services\signup.service.ts" />
+    <TypeScriptCompile Include="Client\app\services\user.service.ts" />
+    <TypeScriptCompile Include="Client\app\shared\fade-in.animation.ts" />
+    <TypeScriptCompile Include="Client\app\shared\loader.component.ts" />
+    <TypeScriptCompile Include="Client\app\shared\truncate.pipe.ts" />
+  </ItemGroup>
+  <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="npm install" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.aot --env.client" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.aot --env.server" />
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; Client\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+  <Target Name="CleanDist" AfterTargets="Clean">
+    <ItemGroup>
+      <FilesToDelete Include="Client\dist\**; wwwroot\dist\**" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+    <RemoveDir Directories="Client\dist; wwwroot\dist" />
+  </Target>
+</Project>

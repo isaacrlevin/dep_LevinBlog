@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LevinBlog.Database.Entity\LevinBlog.Database.Entity.csproj" />
+    <ProjectReference Include="..\LevinBlog.Database\LevinBlog.Database.csproj" />
+    <ProjectReference Include="..\LevinBlog.Model\LevinBlog.Model.csproj" />
+  </ItemGroup>
+
+</Project>

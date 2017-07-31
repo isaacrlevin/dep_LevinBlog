@@ -1,0 +1,30 @@
+<div *ngIf="loadingService.loaded === true" style="padding-top:15px; text-align:center;">
+  <input type="text" placeholder="Signup for Mailing List"
+         #userEmail="ngModel" style="width:300px"
+         name="emails" [(ngModel)]="emails"
+         pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required email />
+  <span (click)="signup()" class="fa fa-envelope-o"
+        *ngIf="userEmail.touched && userEmail?.valid"
+        style="position: relative;z-index: 1;cursor:pointer;left: -35px;width: 0; color:gray"></span>
+  <ul class="list-inline text-center">
+    <li class="list-inline-item">
+      Designed and Developed by <a class="link" href="mailto:isaac@isaaclevin.com" title="Isaac Levin">Isaac Levin</a> &copy; Copyright {{currentYear}} - All Rights Reserved.
+    </li>
+    <li class="list-inline-item">
+      <a href="https://twitter.com/isaac2004" target="_blank" rel="noopener noreferrer">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+    <li class="list-inline-item">
+      <a href="https://github.com/isaac2004" target="_blank" rel="noopener noreferrer">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>

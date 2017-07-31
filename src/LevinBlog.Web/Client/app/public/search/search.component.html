@@ -1,0 +1,14 @@
+<header class="intro-header">
+  <div class="site-heading">
+    <h1>Give Search a Try</h1>
+    <input class="form-control mr-sm-2" [(ngModel)]="search" style="width:33%; display:inline-block" type="text" placeholder="Search">
+    <div class="input-group-button">
+      <button (click)="searchPosts()" class="button">
+        <i class="fa fa-search"></i><span class="hide-for-small-only">&nbsp;SEARCH</span>
+      </button>
+    </div>
+  </div>
+</header>
+<div *ngIf="posts">
+  <blog [posts]="posts"></blog>
+</div>

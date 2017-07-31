@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <PackageReference Include="Sendgrid" Version="9.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LevinBlog.Model\LevinBlog.Model.csproj" />
+    <ProjectReference Include="..\LevinBlog.Repository\LevinBlog.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
