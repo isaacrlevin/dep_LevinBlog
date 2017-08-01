@@ -13,6 +13,7 @@
     <None Remove="Client\app\shared\fade-in.animation.ts" />
     <None Remove="Client\app\shared\loader.component.ts" />
     <None Remove="Client\app\shared\truncate.pipe.ts" />
+    <None Remove="Properties\PublishProfiles\LevinBlog - Web Deploy.pubxml" />
     <None Remove="yarn.lock" />
     <Compile Remove="Client\app\guards\**" />
     <Compile Remove="Client\app\public\components\**" />
@@ -57,6 +58,9 @@
     <TypeScriptCompile Include="Client\app\shared\fade-in.animation.ts" />
     <TypeScriptCompile Include="Client\app\shared\loader.component.ts" />
     <TypeScriptCompile Include="Client\app\shared\truncate.pipe.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->

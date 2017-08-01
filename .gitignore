@@ -261,3 +261,7 @@ __pycache__/
 *.pyc
 src/LevinBlog.Database/Migrations
 src/LevinBlog.Web/appsettings.Production.json
+/src/LevinBlog.Web/Client/dist
+*.pubxml
+/src/LevinBlog.Web/wwwroot
+/src/LevinBlog.Web/package-lock.json

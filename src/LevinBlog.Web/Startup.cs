@@ -145,6 +145,26 @@ namespace LevinBlog.Web
       ServiceMapperConfig.Config();
       app.UseAuthentication();
 
+      //if (env.IsDevelopment())
+      //{
+      //  app.UseDeveloperExceptionPage();
+      //  app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+      //  {
+      //    HotModuleReplacement = true
+      //  });
+
+      //  app.UseMvc(routes =>
+      //  {
+      //    routes.MapRoute(
+      //        name: "default",
+      //        template: "{controller=Home}/{action=Index}/{id?}");
+
+      //    routes.MapSpaFallbackRoute(
+      //        name: "spa-fallback",
+      //        defaults: new { controller = "Home", action = "Index" });
+      //  });
+      //  app.UseExceptionHandler("/Home/Error");
+      //}
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
@@ -152,19 +172,25 @@ namespace LevinBlog.Web
         {
           HotModuleReplacement = true
         });
-
-        app.UseMvc(routes =>
-        {
-          routes.MapRoute(
-              name: "default",
-              template: "{controller=Home}/{action=Index}/{id?}");
-
-          routes.MapSpaFallbackRoute(
-              name: "spa-fallback",
-              defaults: new { controller = "Home", action = "Index" });
-        });
-        app.UseExceptionHandler("/Home/Error");
       }
+
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+         name: "default",
+         template: "{controller=Home}/{action=Index}/{id?}");
+
+        routes.MapRoute(
+         "Sitemap",
+         "sitemap.xml",
+         new { controller = "Home", action = "SitemapXml" });
+
+        routes.MapSpaFallbackRoute(
+          name: "spa-fallback",
+          defaults: new { controller = "Home", action = "Index" });
+
+      });
+      app.UseExceptionHandler("/Home/Error");
     }
   }
 }

@@ -28,7 +28,7 @@ export default createServerRenderer((params: BootFuncParams) => {
     return ngAspnetCoreEngine(setupOptions).then(response => {
         // Apply your transferData to response.globals
         response.globals.transferData = createTransferScript({
-            AppInsightsId: '6'
+            AppInsightsId: ''
         });
 
         return ({

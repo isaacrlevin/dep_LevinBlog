@@ -93,11 +93,11 @@ export class AppComponent implements OnInit, OnDestroy {
             metaData.push({ name: 'og:description', content: tag });
         } else {
             title = event[0]['title']
-                ? `${event[0]['title']} - ${this.endPageTitle}`
+                ? `${event[0]['title'].charAt(0).toUpperCase() + event[0]['title'].slice(1).toLowerCase()} - ${this.endPageTitle}`
                 : `${this.endPageTitle}`;
         }
 
-        this.title.setTitle(title.charAt(0).toUpperCase() + title.slice(1).toLowerCase());
+        this.title.setTitle(title);
 
         // get route related meta
         metaData.push({ name: 'og:url', content: `${this.getBaseUrl()}` });
