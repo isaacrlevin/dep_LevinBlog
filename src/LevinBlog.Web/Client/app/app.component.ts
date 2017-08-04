@@ -19,7 +19,7 @@ import 'rxjs/add/operator/combineLatest';
 export class AppComponent implements OnInit, OnDestroy {
 
     // This will go at the END of your title for example "Home - Angular Universal..." <-- after the dash (-)
-    private endPageTitle: string = ' - Isaac Levin';
+    private endPageTitle: string = 'Isaac Levin';
     // If no Title is provided, we'll use a default one before the dash(-)
 
     private routerSub$: Subscription;

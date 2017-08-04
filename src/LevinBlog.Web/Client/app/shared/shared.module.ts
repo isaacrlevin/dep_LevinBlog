@@ -9,6 +9,7 @@ import { LoaderComponent } from './loader.component';
 import { BlogComponent } from './blog/blog.component';
 import { FooterComponent } from './footer/footer.component';
 import { Ng2BootstrapModule, CollapseModule, ModalModule } from 'ngx-bootstrap';
+import { HighlightJsService } from 'angular2-highlight-js';
 
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
@@ -29,6 +30,7 @@ import { Ng2BootstrapModule, CollapseModule, ModalModule } from 'ngx-bootstrap';
         CollapseModule.forRoot()
     ],
     providers: [
+        HighlightJsService
     ],
     exports: [
         CommonModule,

@@ -40,7 +40,7 @@ namespace LevinBlog.Web.Controllers
       // By default we're passing down Cookies, Headers, Host from the Request object here
       TransferData transferData = new TransferData();
       transferData.request = AbstractHttpContextRequestInfo(Request);
-      transferData.AppInsightsId = "";
+      transferData.AppInsightsId = _appSettings.AppInsightsId;
       // Add more customData here, add it to the TransferData class
 
       // Prerender / Serialize application (with Universal)

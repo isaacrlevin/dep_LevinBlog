@@ -362,7 +362,12 @@ namespace LevinBlog.Repository
             entity.SmallImage = post.SmallImage;
             entity.Image = post.Image;
             entity.Link = post.Link;
-            entity.ModifiedOn = DateTime.Now;
+            entity.ModifiedOn = DateTime.UtcNow;
+
+            if (!entity.Published && post.Published )
+            {
+                entity.PostedOn = DateTime.UtcNow;
+            }
             entity.Published = post.Published;
 
             // Excerpt

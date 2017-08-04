@@ -178,7 +178,7 @@ namespace LevinBlog.Service
             }
 
             post.Category = null;
-            post.PostedOn = DateTime.Now;
+            post.PostedOn = DateTime.UtcNow;
             post.ModifiedOn = post.PostedOn;
             post.CreatedOn = post.PostedOn;
             post.Published = false;

@@ -1,7 +1,7 @@
 <div *ngIf="loadingService.loaded === true" style="padding-top:15px; text-align:center;">
   <input type="text" placeholder="Signup for Mailing List"
          #userEmail="ngModel" style="width:300px"
-         name="emails" [(ngModel)]="emails"
+         name="email" [(ngModel)]="email"
          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required email />
   <span (click)="signup()" class="fa fa-envelope-o"
         *ngIf="userEmail.touched && userEmail?.valid"

@@ -32,7 +32,8 @@
                       </button>
                       <button type="button" (click)="remove(post.id)">
                         <i class="fa fa-fw fa-trash"></i>
-                      </button>
+                      </button>                      
+                      <a routerLink="/post/{{post.url}}" href="" target="_blank">  <i class="fa fa-fw fa-eye"></i></a>                      
                     </td>
                     <td>{{post.name}}</td>
                     <td>{{post.url}}</td>
