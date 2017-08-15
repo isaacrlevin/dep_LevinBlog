@@ -4,7 +4,8 @@ using LevinBlog.Service;
 using Microsoft.AspNetCore.Authorization;
 using LevinBlog.Model;
 using System.Collections.Generic;
-
+using Microsoft.Extensions.Caching.Memory;
+using System;
 namespace Pioneer.Blog.Controllers.Web
 {
   [Authorize]
@@ -13,63 +14,78 @@ namespace Pioneer.Blog.Controllers.Web
   {
     private readonly IPostService _postService;
     private readonly IPostTagService _postTagService;
-
-    public PostApiController(IPostService postService, IPostTagService postTagService)
+    private IMemoryCache _cache;
+    private MemoryCacheEntryOptions cacheEntryOptions;
+    public PostApiController(IPostService postService, IPostTagService postTagService, IMemoryCache cache)
     {
       _postService = postService;
       _postTagService = postTagService;
+      _cache = cache;
+
+      cacheEntryOptions = new MemoryCacheEntryOptions()
+          .SetSlidingExpiration(TimeSpan.FromDays(1));
     }
 
     [AllowAnonymous]
     [HttpGet]
-    public IEnumerable<Post> GetAll(int? countPerPage,
-        int? currentPageIndex,
+    public IEnumerable<Post> GetAll(
         bool includeExceprt = true,
         bool includeArticle = true,
         bool includeUnpublished = false)
     {
-      if (countPerPage == null || currentPageIndex == null)
+      IEnumerable<Post> cacheEntry;
+      if (!_cache.TryGetValue("GetAllPosts", out cacheEntry))
       {
-        return _postService.GetAll(includeExceprt, includeArticle, includeUnpublished);
+        cacheEntry = _postService.GetAll(includeExceprt, includeArticle, includeUnpublished);
+        _cache.Set("GetAllPosts", cacheEntry, cacheEntryOptions);
       }
-
-      return _postService.GetAllPaged((int)countPerPage, (int)currentPageIndex, includeUnpublished);
+      return cacheEntry;
     }
 
     [AllowAnonymous]
     [HttpGet("GetAllByCategory")]
     public IEnumerable<Post> GetAllByCategory(string category, int? countPerPage, int? currentPageIndex)
     {
-      if (countPerPage == null || currentPageIndex == null)
+      IEnumerable<Post> cacheEntry;
+      if (!_cache.TryGetValue($"GetAllPostsForCategory{category}", out cacheEntry))
       {
-        return _postService.GetAllByCategory(category, 5);
+        cacheEntry = _postService.GetAllByCategory(category, countPerPage ?? 5, currentPageIndex ?? 1);
+        _cache.Set($"GetAllPostsForCategory{category}", cacheEntry, cacheEntryOptions);
       }
-
-      return _postService.GetAllByCategory(category, (int)countPerPage, (int)currentPageIndex);
+      return cacheEntry;
     }
 
     [AllowAnonymous]
     [HttpGet("GetAllByTag")]
     public IEnumerable<Post> GetAllByTag(string tag, int? countPerPage, int? currentPageIndex)
     {
-      if (countPerPage == null || currentPageIndex == null)
+      IEnumerable<Post> cacheEntry;
+      if (!_cache.TryGetValue($"GetAllPostsForTag{tag}", out cacheEntry))
       {
-        return _postService.GetAllByTag(tag, 5);
+        cacheEntry = _postService.GetAllByTag(tag, countPerPage ?? 5, currentPageIndex ?? 1);
+        _cache.Set($"GetAllPostsForTag{tag}", cacheEntry, cacheEntryOptions);
+
       }
-      return _postService.GetAllByTag(tag, (int)countPerPage, (int)currentPageIndex);
+      return cacheEntry;
     }
 
     [AllowAnonymous]
     [HttpGet("{url}", Name = "GetPost")]
-    public IActionResult GetById(string url, bool includeExcerpt = false)
+    public IActionResult GetById(string url, bool includeExcerpt)
     {
-      var item = _postService.GetByUrl(url, includeExcerpt);
-      if (item == null)
+      Post cacheEntry;
+      if (!_cache.TryGetValue($"GetById{url}", out cacheEntry))
+      {
+        cacheEntry = _postService.GetByUrl(url, includeExcerpt);
+        _cache.Set($"GetById{url}", cacheEntry, cacheEntryOptions);
+      }
+
+      if (cacheEntry == null)
       {
         return NotFound();
       }
 
-      return new ObjectResult(item);
+      return new ObjectResult(cacheEntry);
     }
 
     [Route("count/total")]
@@ -109,19 +125,5 @@ namespace Pioneer.Blog.Controllers.Web
       _postTagService.Sync(item.Tags.Select(a => new PostTag { PostId = item.Id, TagId = a.Id }).ToList());
       return new NoContentResult();
     }
-
-    //[HttpDelete("{url}")]
-    //[Authorize(Policy = "isSuperUser")]
-    //public IActionResult Delete(string url)
-    //{
-    //    var todo = _postService.GetByUrl(url);
-    //    if (todo == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    _postService.Remove(url);
-    //    return new NoContentResult();
-    //}
   }
 }

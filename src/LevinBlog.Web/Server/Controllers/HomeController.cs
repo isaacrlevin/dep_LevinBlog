@@ -1,3 +1,4 @@
+using LevinBlog.Service;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,17 +13,22 @@ using System.Diagnostics;
 using System;
 using LevinBlog.Model;
 using Microsoft.Extensions.Options;
+using System.Text;
 
 namespace LevinBlog.Web.Controllers
 {
   public class HomeController : Controller
   {
     private readonly AppConfiguration _appSettings;
+    private readonly ISiteMapService _siteMapService;
+    private readonly IRSSFeedService _rssFeedService;
 
     public HomeController(
-    IOptions<AppConfiguration> appSettings)
+    IOptions<AppConfiguration> appSettings, ISiteMapService siteMapService, IRSSFeedService rssFeedService)
     {
       _appSettings = appSettings?.Value;
+      _siteMapService = siteMapService;
+      _rssFeedService = rssFeedService;
     }
     public async Task<IActionResult> Index()
     {
@@ -40,7 +46,7 @@ namespace LevinBlog.Web.Controllers
       // By default we're passing down Cookies, Headers, Host from the Request object here
       TransferData transferData = new TransferData();
       transferData.request = AbstractHttpContextRequestInfo(Request);
-      transferData.AppInsightsId = _appSettings.AppInsightsId;
+      transferData.appInsightsId = _appSettings.AppInsightsId;
       // Add more customData here, add it to the TransferData class
 
       // Prerender / Serialize application (with Universal)
@@ -65,6 +71,15 @@ namespace LevinBlog.Web.Controllers
       ViewData["GoogleAnalyticsId"] = _appSettings.GoogleAnalyticsId;
       ViewData["AppInsightsId"] = _appSettings.AppInsightsId;
       return View();
+    }
+
+    public IActionResult SiteMap()
+    {
+      return Content(_siteMapService.GetSiteMap(), "text/xml", Encoding.UTF8);
+    }
+    public IActionResult RSSFeed()
+    {
+      return Content(_rssFeedService.GetRSSFeed(), "text/xml", Encoding.UTF8);
     }
 
     public IActionResult Error()
@@ -96,6 +111,6 @@ namespace LevinBlog.Web.Controllers
     public dynamic request { get; set; }
 
     // Your data here ?
-    public string AppInsightsId { get; set; }
+    public string appInsightsId { get; set; }
   }
 }

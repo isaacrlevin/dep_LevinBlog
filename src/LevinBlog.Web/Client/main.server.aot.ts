@@ -15,28 +15,28 @@ enableProdMode();
 
 export default createServerRenderer(params => {
 
-  // Platform-server provider configuration
-  const setupOptions: IEngineOptions = {
-    appSelector: '<app></app>',
-    ngModule: ServerAppModuleNgFactory,
-    request: params,
-    providers: [
-      // Optional - Any other Server providers you want to pass (remember you'll have to provide them for the Browser as well)
-    ]
-  };
+    // Platform-server provider configuration
+    const setupOptions: IEngineOptions = {
+        appSelector: '<app></app>',
+        ngModule: ServerAppModuleNgFactory,
+        request: params,
+        providers: [
+            // Optional - Any other Server providers you want to pass (remember you'll have to provide them for the Browser as well)
+        ]
+    };
 
-  return ngAspnetCoreEngine(setupOptions).then(response => {
-    // Apply your transferData to response.globals
-    response.globals.transferData = createTransferScript({
-        AppInsightsId: '35a444a7-3391-4c21-b240-334a940e8fc6',
-        AppInsightsId2: params.data.AppInsightsId
-    });
+    return ngAspnetCoreEngine(setupOptions).then(response => {
+        // Apply your transferData to response.globals
+        response.globals.transferData = createTransferScript({
+            AppInsightsId: params.data.appInsightsId,
+            DiscusShortName: params.data.discusShortName
+        });
 
-    return ({
-      html: response.html,
-      globals: response.globals
+        return ({
+            html: response.html,
+            globals: response.globals
+        });
     });
-  });
 });
 
 /* -------- THIS FILE IS TEMPORARY and will be gone when @ngtools/webpack can handle dual files (w server) ---------- */

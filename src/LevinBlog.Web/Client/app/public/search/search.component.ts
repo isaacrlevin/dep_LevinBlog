@@ -36,7 +36,7 @@ export class SearchComponent implements OnInit {
     getPosts(): void {
         this.loading = true;
         this.searchService.get(this.search)
-            .then(posts => {
+            .subscribe(posts => {
                 this.posts = posts;
                 this.loading = false;
             });

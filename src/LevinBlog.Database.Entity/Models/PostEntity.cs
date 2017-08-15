@@ -23,6 +23,8 @@ namespace LevinBlog.Database.Entity
         [StringLength(220)]
         public string Url { get; set; }
 
+        public string Keywords { get; set; }
+
         [MaxLength(220)]
         [StringLength(220)]
         public string Link { get; set; }

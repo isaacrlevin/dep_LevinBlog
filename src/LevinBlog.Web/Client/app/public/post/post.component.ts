@@ -21,14 +21,14 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 
 export class PostComponent implements OnInit {
-
+    setTitle: string;
     posts: Post[];
     post: Post;
     url: string;
     private sub: any;
     width$: Observable<number>;
     constructor(private postService: PostService, private highLight: HighlightJsService, private route: ActivatedRoute, private elRef: ElementRef, private title: Title, private renderer: Renderer2, @Inject(PLATFORM_ID) private platformId: Object) {
-        if (isPlatformBrowser) {
+        if (isPlatformBrowser(this.platformId)) {
             let windowSize$ = new BehaviorSubject(getWindowSize());
             this.width$ = (windowSize$.pluck('width') as Observable<number>).distinctUntilChanged();
 
@@ -51,6 +51,24 @@ export class PostComponent implements OnInit {
                 this.route.data
                     .subscribe((data: { posts: Post[] }) => {
                         this.posts = data.posts;
+                        let title = this.title.getTitle().replace(' - Isaac Levin', '');
+                        if (this.posts.length > 0) {
+                            this.posts.forEach(function (post) {
+                                if (post.category.url.toLowerCase() == title.toLowerCase()) {
+                                    title = post.category.name + ' Posts';
+                                }
+                                post.tags.forEach(function (tag) {
+                                    if (title.toLowerCase() == tag.url.toLowerCase()) {
+                                        title = tag.name + ' Posts';
+                                    }
+                                });
+                            });
+                        }
+                        else {
+                            this.title.setTitle(title);
+                        }
+                        this.title.setTitle(title);
+                        this.setTitle = title;
                     });
             }
         });
@@ -62,7 +80,7 @@ export class PostComponent implements OnInit {
 
 
     ngAfterViewChecked() {
-        if (isPlatformBrowser) {
+        if (isPlatformBrowser(this.platformId)) {
             let div = this.elRef.nativeElement.querySelector('#disqus_thread');
             if (div !== null) {
                 this.renderer.addClass(div, 'container');

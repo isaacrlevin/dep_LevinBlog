@@ -265,3 +265,4 @@ src/LevinBlog.Web/appsettings.Production.json
 *.pubxml
 /src/LevinBlog.Web/wwwroot
 /src/LevinBlog.Web/package-lock.json
+/.vscode

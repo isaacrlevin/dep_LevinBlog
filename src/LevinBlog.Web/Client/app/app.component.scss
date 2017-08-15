@@ -11,7 +11,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-size: 12px
+  font-size: 12px;
 }
 
 .wrapper {
@@ -31,29 +31,24 @@ footer .list-inline {
   padding: 0;
 }
 
+.header, .content, .footer {
+  display: table-row;
+}
 
+.header, .footer {
+  height: 0;
+  padding: 5px;
+}
 
-//@media only screen and (min-width: 768px) {
-  .header, .content, .footer {
-    display: table-row;
-  }
-
-  .header, .footer {
-    height: 0;
-    padding: 5px;
-  }
-
-  .footer {
-    padding: 50px 0 65px;
-  }
-//}
+.footer {
+  padding: 50px 0 65px;
+}
 
 footer .copyright {
   font-size: 10px;
   text-align: center;
   margin-bottom: 0;
 }
-
 
 .inner {
   height: 100%;
@@ -120,8 +115,6 @@ hr.small {
   color: white;
 }
 
-
-
 .intro-header .site-heading,
 .intro-header .page-heading {
   text-align: center;
@@ -148,9 +141,11 @@ hr.small {
   .intro-header .page-heading h1 {
     font-size: 80px;
   }
+
   .intro-header {
     height: 180px;
   }
+
   .intro-header .post-heading h1 {
     font-size: 55px;
   }
@@ -295,7 +290,6 @@ img::-moz-selection {
 body {
   -webkit-tap-highlight-color: #0085A1;
 }
-
 
 .list-inline-item:not(:last-child) {
   margin-right: 1em;

@@ -3,7 +3,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <IsPackable>false</IsPackable>
-    <PackageTargetFallback>%3bnet461%3bportable-net45+win8</PackageTargetFallback>
     <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -38,11 +37,12 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.SnapshotCollector" Version="1.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0-preview2-final" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.0-preview2-final" />
+    <PackageReference Include="Microsoft.ApplicationInsights.SnapshotCollector" Version="1.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.0" />
     <PackageReference Include="Microsoft.Composition" Version="1.0.31" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0-preview2-final" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
+    <PackageReference Include="Robotify.AspNetCore" Version="0.1.0" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Client\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="Client\app\services\auth-interceptor.ts" />
     <TypeScriptCompile Include="Client\app\services\signup.service.ts" />
     <TypeScriptCompile Include="Client\app\services\user.service.ts" />
     <TypeScriptCompile Include="Client\app\shared\fade-in.animation.ts" />
@@ -61,6 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.0.0" />
   </ItemGroup>
   <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->

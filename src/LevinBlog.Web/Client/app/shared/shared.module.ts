@@ -10,7 +10,7 @@ import { BlogComponent } from './blog/blog.component';
 import { FooterComponent } from './footer/footer.component';
 import { Ng2BootstrapModule, CollapseModule, ModalModule } from 'ngx-bootstrap';
 import { HighlightJsService } from 'angular2-highlight-js';
-
+import { FormsModule } from '@angular/forms';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
     declarations: [
@@ -20,14 +20,15 @@ import { HighlightJsService } from 'angular2-highlight-js';
         SafeHtmlPipe,
         TruncatePipe,
         NotFoundComponent,
-       // BrowserAnimationsModule
+        // BrowserAnimationsModule
     ],
     imports: [
         CommonModule,
         TransferHttpModule,
         Ng2BootstrapModule,
         ModalModule.forRoot(),
-        CollapseModule.forRoot()
+        CollapseModule.forRoot(),
+        FormsModule
     ],
     providers: [
         HighlightJsService

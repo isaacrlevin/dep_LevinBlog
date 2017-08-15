@@ -1,25 +1,25 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { ORIGIN_URL } from '../shared/constants/baseurl.constants';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
-
+import 'rxjs/add/operator/map';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 @Injectable()
 export class AuthenticationService {
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient, @Inject(ORIGIN_URL) private baseUrl: string) { }
 
     login(username: string, password: string) {
-        return this.http.post('/users/authenticate', { username: username, password: password })
-            .map((response: Response) => {
+        return this.http.post<any>('/users/authenticate', { username: username, password: password })
+            .map(user => {
                 // login successful if there's a jwt token in the response
-                let user = response.json();
                 if (user && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }
             }).catch(this.handleError);
     }
+
     authenticated(): Observable<boolean> {
-        return this.http.get('users/authenticate', this.jwt())
+        return this.http.get('users/authenticate', { headers: this.jwt() })
             .map(() => true)
             .catch(() => {
                 this.logout();
@@ -34,8 +34,7 @@ export class AuthenticationService {
     private jwt() {
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
+            return new HttpHeaders().set('Authorization', 'Bearer ' + currentUser.token);
         }
     }
 

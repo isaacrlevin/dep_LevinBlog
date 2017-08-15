@@ -10,3 +10,4 @@ export * from './link.service';
 export * from './search.service';
 export * from './loading.service';
 export * from './about.service';
+export * from './auth-interceptor';

@@ -65,7 +65,7 @@ export class AdminPostComponent implements OnInit {
     getAllPosts(): void {
         this.loading = true;
         this.postService.getAll()
-            .then(posts => {
+            .subscribe(posts => {
                 this.posts = posts;
                 this.totalItemsInCollection = posts.length;
                 this.loading = false;
@@ -75,7 +75,7 @@ export class AdminPostComponent implements OnInit {
     getAllTags(): void {
         this.loading = true;
         this.tagService.getAll()
-            .then(tags => {
+            .subscribe(tags => {
                 this.tags = tags;
                 this.loading = false;
             });
@@ -84,7 +84,7 @@ export class AdminPostComponent implements OnInit {
     getAllCategories(): void {
         this.loading = true;
         this.categoryService.getAll()
-            .then(categories => {
+            .subscribe(categories => {
                 this.categories = categories;
                 this.loading = false;
             });
@@ -105,7 +105,7 @@ export class AdminPostComponent implements OnInit {
     resetPosts(): void {
         // TODO: Abstract out - shared with init
         this.postService.getAll(this.countPerPage, this.currentPageIndex, false, false, true)
-            .then((posts: Post[]) => {
+            .subscribe((posts: Post[]) => {
                 this.posts = posts;
                 this.totalItemsInCollection = this.posts.length;
             });
@@ -115,7 +115,7 @@ export class AdminPostComponent implements OnInit {
         if (confirm(`Are you sure you want to delete "${this.selectedPost.title}" from the posts list?`)) {
             this.loading = true;
             this.postService.remove(idUrl)
-                .then(() => {
+                .subscribe(() => {
                     this.loading = false;
                 });
         }
@@ -127,12 +127,12 @@ export class AdminPostComponent implements OnInit {
 
             if (pos.id === undefined) {
                 this.postService.create(this.selectedPost)
-                    .then(() => {
+                    .subscribe(() => {
                         this.loading = false;
                     });
             } else {
                 this.postService.save(this.selectedPost)
-                    .then(() => {
+                    .subscribe(() => {
                         this.loading = false;
                     });
             }

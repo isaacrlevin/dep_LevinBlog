@@ -34,7 +34,7 @@ export const routes: Routes = [
         path: '', component: HomeComponent,
         data: {
             title: 'Homepage',
-            meta: metaData.push({
+            meta: metaData.concat({
                 name: 'og:description', content: 'Hi, my name is Isaac Levin and I am a Microsoft Certified Solution Developer, Microsoft Certiied Solution Associate and Microsot Specalist living in Norwalk, CT'
             })
         },
@@ -46,7 +46,7 @@ export const routes: Routes = [
         path: 'about', component: AboutComponent,
         data: {
             title: 'About',
-            meta: metaData.push({
+            meta: metaData.concat({
                 name: 'og:description', content: 'Hi, my name is Isaac Levin and I am a Microsoft Certified Solution Developer, Microsoft Certiied Solution Associate and Microsot Specalist living in Norwalk, CT'
             })
         },
@@ -129,7 +129,6 @@ export const routes: Routes = [
         data: {
             title: 'Category',
             meta: metaData,
-            //links: [
         },
         resolve: {
             post: PostResolver

@@ -1,64 +1,45 @@
-import { Injectable } from '@angular/core';
-import { Category } from '../models/category';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-
+import { Injectable, Inject } from '@angular/core';
+import { ORIGIN_URL } from '../shared/constants/baseurl.constants';
+import { TransferHttp } from '../../modules/transfer-http/transfer-http';
+import { Observable } from 'rxjs/Observable';
+import { HttpParams, HttpClient } from '@angular/common/http';
+import { Category } from  '../models/index';
 @Injectable()
 export class CategoryService {
     private url = '/categories';
 
-    constructor(private http: Http) { }
+    constructor(private transferHttp: TransferHttp, private http: HttpClient, @Inject(ORIGIN_URL) private baseUrl: string) { }
 
 
-    getAll(): Promise<Category[]> {
+    getAll(): Observable<Category[]> {
         const url = `${this.url}`;
         return this.http.get(url)
-            .toPromise()
-            .then(response =>
-                response.json() as Category[]
-            )
             .catch(this.handleError);
     }
 
-    getById(id: number): Promise<Category> {
+    getById(id: number): Observable<Category> {
         const url = `${this.url}/${id}`;
         return this.http.get(url)
-            .toPromise()
-            .then(response => response.json() as Category)
             .catch(this.handleError);
     }
 
-    create(category: Category): Promise<Category> {
+    create(category: Category): Observable<Category> {
         return this.http
-            .post(this.url, category, this.jwt())
-            .toPromise()
-            .then(res => res.json() as Category)
+            .post(this.url, category)
             .catch(this.handleError)
     }
 
-    update(category: Category): Promise<void> {
+    update(category: Category): Observable<void> {
         const url = `${this.url}/${category.id}`;
         return this.http
-            .put(url, category, this.jwt())
-            .toPromise()
-            .then(() => null)
+            .put(url, category)
             .catch(this.handleError);
     }
 
-    delete(id: number): Promise<void> {
+    delete(id: number): Observable<void> {
         const url = `${this.url}/${id}`;
-        return this.http.delete(url, this.jwt())
-            .toPromise()
-            .then(() => null)
+        return this.http.delete(url)
             .catch(this.handleError);
-    }
-
-    private jwt() {
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
-        }
     }
 
     private handleError(error: any): Promise<any> {

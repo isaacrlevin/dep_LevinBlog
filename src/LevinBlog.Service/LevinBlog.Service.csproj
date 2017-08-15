@@ -6,12 +6,16 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
-    <PackageReference Include="Sendgrid" Version="9.5.0" />
+    <PackageReference Include="Sendgrid" Version="9.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LevinBlog.Model\LevinBlog.Model.csproj" />
     <ProjectReference Include="..\LevinBlog.Repository\LevinBlog.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

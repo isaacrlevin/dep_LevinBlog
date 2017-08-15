@@ -1,16 +1,16 @@
 import { NgModule, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule, APP_BASE_HREF } from '@angular/common';
-import { HttpModule, Http } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { AuthenticationService, AboutService ,SearchService, LoadingService, LinkService, CategoryService, PostService, PostTagService, SignupService, UserService, AlertService, TagService } from '../services/index';
-
+import { AuthenticationService, AboutService, SearchService, LoadingService, LinkService, CategoryService, PostService, PostTagService, SignupService, UserService, AlertService, TagService, JWTInterceptor } from '../services/index';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 @NgModule({
     declarations: [
     ],
     imports: [
         CommonModule,
-        HttpModule,
+        HttpClientModule,
         FormsModule,
         RouterModule
     ],
@@ -26,10 +26,15 @@ import { AuthenticationService, AboutService ,SearchService, LoadingService, Lin
         LinkService,
         SearchService,
         LoadingService,
-        AboutService
+        AboutService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JWTInterceptor,
+            multi: true
+        }
     ],
     exports: [
-        HttpModule,
+        HttpClientModule,
         FormsModule,
         RouterModule,
     ]

@@ -30,7 +30,7 @@ export class AdminCategoryComponent implements OnInit {
         if (confirm(`Are you sure you want to add "${this.selectedCategory.name}" to the categories list?`)) {
             this.loading = true;
             this.categoryService.create(this.selectedCategory)
-                .then(() => {
+                .subscribe(() => {
                     this.getAll();
                 });
         }
@@ -44,7 +44,7 @@ export class AdminCategoryComponent implements OnInit {
         if (confirm(`Are you sure you want to delete "${this.selectedCategory.name}" from the categories list?`)) {
             this.loading = true;
             this.categoryService.delete(id)
-                .then(() => {
+                .subscribe(() => {
                     this.getAll();
                 });
         }
@@ -54,7 +54,7 @@ export class AdminCategoryComponent implements OnInit {
         if (confirm(`Are you sure you want to save "${this.selectedCategory.name}" changes`)) {
             this.loading = true;
             this.categoryService.update(this.selectedCategory)
-                .then(() => {
+                .subscribe(() => {
                     this.getAll();
                 });
         }
@@ -70,7 +70,7 @@ export class AdminCategoryComponent implements OnInit {
     getAll(): void {
         this.loading = true;
         this.categoryService.getAll()
-            .then(categories => {
+            .subscribe(categories => {
                 this.categories = categories;
                 this.loading = false;
             });

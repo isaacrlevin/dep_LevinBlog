@@ -1,64 +1,44 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { ORIGIN_URL } from '../shared/constants/baseurl.constants';
+import { TransferHttp } from '../../modules/transfer-http/transfer-http';
+import { Observable } from 'rxjs/Observable';
 import { Tag } from '../models/tag';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { HttpParams, HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class TagService {
     private url = '/tags';
 
-    constructor(private http: Http) { }
+    constructor(private transferHttp: TransferHttp, private http: HttpClient, @Inject(ORIGIN_URL) private baseUrl: string) { }
 
 
-    getAll(): Promise<Tag[]> {
-        const url = `${this.url}`;
-        return this.http.get(url)
-            .toPromise()
-            .then(response =>
-                response.json() as Tag[]
-            )
+    getAll(): Observable<Tag[]> {
+        return this.http.get(`${this.baseUrl}${this.url }`)
             .catch(this.handleError);
     }
 
-    getById(id: number): Promise<Tag> {
-        const url = `${this.url}/${id}`;
-        return this.http.get(url)
-            .toPromise()
-            .then(response => response.json() as Tag)
+    getById(id: number): Observable<Tag> {
+        return this.http.get(`${this.baseUrl}${this.url }/${id}`)
             .catch(this.handleError);
     }
 
-    create(tag: Tag): Promise<Tag> {
+    create(tag: Tag): Observable<Tag> {
         return this.http
-            .post(this.url, tag, this.jwt())
-            .toPromise()
-            .then(res => res.json() as Tag)
+            .post(`${this.baseUrl}${this.url}`, tag)
             .catch(this.handleError)
     }
 
-    update(tag: Tag): Promise<void> {
-        const url = `${this.url}/${tag.id}`;
+    update(tag: Tag): Observable<void> {
+        const url = `${this.baseUrl}${this.url}/${tag.id}`;
         return this.http
-            .put(url, tag, this.jwt())
-            .toPromise()
-            .then(() => null)
+            .put(url, tag)
             .catch(this.handleError);
     }
 
-    delete(id: number): Promise<void> {
+    delete(id: number): Observable<void> {
         const url = `${this.url}/${id}`;
-        return this.http.delete(url, this.jwt())
-            .toPromise()
-            .then(() => null)
+        return this.http.delete(url)
             .catch(this.handleError);
-    }
-
-    private jwt() {
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
-        }
     }
 
     private handleError(error: any): Promise<any> {

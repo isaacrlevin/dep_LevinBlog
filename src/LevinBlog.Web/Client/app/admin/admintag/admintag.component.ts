@@ -30,7 +30,7 @@ export class AdminTagComponent implements OnInit {
         if (confirm(`Are you sure you want to add "${this.selectedTag.name}" to the tags list?`)) {
             this.loading = true;
             this.tagService.create(this.selectedTag)
-                .then(() => {
+                .subscribe(() => {
                     this.getAll();
                 });
         }
@@ -44,7 +44,7 @@ export class AdminTagComponent implements OnInit {
         if (confirm(`Are you sure you want to delete "${this.selectedTag.name}" from the tags list?`)) {
             this.loading = true;
             this.tagService.delete(id)
-                .then(() => {
+                .subscribe(() => {
                     this.getAll();
                 });
         }
@@ -63,7 +63,7 @@ export class AdminTagComponent implements OnInit {
         if (confirm(`Are you sure you want to save "${this.selectedTag.name}" changes`)) {
             this.loading = true;
             this.tagService.update(this.selectedTag)
-                .then(() => {
+                .subscribe(() => {
                     this.getAll();
                 });
         }
@@ -72,7 +72,7 @@ export class AdminTagComponent implements OnInit {
     getAll(): void {
         this.loading = true;
         this.tagService.getAll()
-            .then(tags => {
+            .subscribe(tags => {
                 this.tags = tags;
                 this.loading = false;
             });

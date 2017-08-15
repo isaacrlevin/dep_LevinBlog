@@ -1,22 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-
+import { Injectable, Inject } from '@angular/core';
+import { ORIGIN_URL } from '../shared/constants/baseurl.constants';
+import { TransferHttp } from '../../modules/transfer-http/transfer-http';
+import { Observable } from 'rxjs/Observable';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { Post } from '../models/post';
 
 @Injectable()
 export class SearchService {
     private url = '/api/search';
 
-    constructor(private http: Http) { }
+    constructor(private transferHttp: TransferHttp, private http: HttpClient, @Inject(ORIGIN_URL) private baseUrl: string) { }
 
-    get(search: string): Promise<Post[]> {
-        return this.http.get(this.url + '/' + search)
-            .toPromise()
-            .then((res: Response) => {
-                const body: Post[] = res.json();
-                return body || {} as Post[];
-            })
+    get(search: string): Observable<Post[]> {
+        return this.http.get(`${this.baseUrl}${this.url}/${search}`)
             .catch(this.handleError);
     }
 

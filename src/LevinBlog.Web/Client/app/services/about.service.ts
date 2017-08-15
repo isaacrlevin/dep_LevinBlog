@@ -1,20 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
-
+import { Injectable, Inject } from '@angular/core';
+import { ORIGIN_URL } from '../shared/constants/baseurl.constants';
+import { TransferHttp } from '../../modules/transfer-http/transfer-http';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 @Injectable()
 export class AboutService {
     private url = '/api/about';
 
-    constructor(private http: Http) { }
+    constructor(private transferHttp: TransferHttp, private http: HttpClient, @Inject(ORIGIN_URL) private baseUrl: string) { }
 
-    get(): Promise<any> {
-        return this.http.get(this.url)
-            .toPromise()
-            .then((res: Response) => {
-                const body: any = res.json();
-                return body || {} as any;
-            })
+    get(): Observable<any> {
+        return this.http.get(`${this.baseUrl}${this.url}`)
             .catch(this.handleError);
     }
 

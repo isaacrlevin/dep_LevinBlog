@@ -25,6 +25,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using Pioneer.Blog.Service;
+using Robotify.AspNetCore;
 
 namespace LevinBlog.Web
 {
@@ -66,7 +67,8 @@ namespace LevinBlog.Web
       services.AddCors();
       services.AddMvc();
       services.AddNodeServices();
-
+      services.AddMemoryCache();
+      services.AddRobotify(Configuration);
       services.AddDbContext<BlogContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("BlogDatabase")));
 
@@ -86,6 +88,8 @@ namespace LevinBlog.Web
       services.AddTransient<IPostTagService, PostTagService>();
       services.AddTransient<ISearchService, SearchService>();
       services.AddTransient<ICommunicationService, CommunicationService>();
+      services.AddTransient<ISiteMapService, SiteMapService>();
+      services.AddTransient<IRSSFeedService, RSSFeedService>();
       services.AddTransient<ITagService, TagService>();
       services.AddTransient<IUserService, UserService>();
       //services.AddTransient<ApplicationEnvironment>();
@@ -95,9 +99,7 @@ namespace LevinBlog.Web
       {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      });
-
-      services.AddJwtBearerAuthentication(o =>
+      }).AddJwtBearer(o =>
       {
         o.TokenValidationParameters = new TokenValidationParameters
         {
@@ -110,7 +112,7 @@ namespace LevinBlog.Web
         {
           OnAuthenticationFailed = c =>
           {
-            c.HandleResponse();
+            c.NoResult();
 
             c.Response.StatusCode = 500;
             c.Response.ContentType = "text/plain";
@@ -173,7 +175,7 @@ namespace LevinBlog.Web
           HotModuleReplacement = true
         });
       }
-
+      app.UseRobotify();
       app.UseMvc(routes =>
       {
         routes.MapRoute(
@@ -184,6 +186,11 @@ namespace LevinBlog.Web
          "Sitemap",
          "sitemap.xml",
          new { controller = "Home", action = "SitemapXml" });
+
+        routes.MapRoute(
+        "feed",
+        "rssfeed.xml",
+        new { controller = "Home", action = "RSSFeed" });
 
         routes.MapSpaFallbackRoute(
           name: "spa-fallback",

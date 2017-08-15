@@ -1,37 +1,31 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
+import { Injectable, Inject } from '@angular/core';
+import { ORIGIN_URL } from '../shared/constants/baseurl.constants';
+import { TransferHttp } from '../../modules/transfer-http/transfer-http';
+import { Observable } from 'rxjs/Observable';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 
 @Injectable()
 export class UserService {
-    constructor(private http: Http) { }
-
-    getAll() {
-        return this.http.get('/users', this.jwt()).map((response: Response) => response.json());
+    constructor(private transferHttp: TransferHttp, private http: HttpClient, @Inject(ORIGIN_URL) private baseUrl: string) { }
+    private url = '/user';
+    getAll(): Observable<User[]> {
+        return this.http.get<User[]>(`${this.baseUrl}${this.url}`);
     }
 
-    getById(id: number) {
-        return this.http.get('/users/' + id, this.jwt()).map((response: Response) => response.json());
+    getById(id: number): Observable<User> {
+        return this.http.get<User>(`${this.baseUrl }${this.url }/${id}`);
     }
 
     create(user: User) {
-        return this.http.post('/users', user, this.jwt());
+        return this.http.post(`${this.baseUrl}${this.url }`, user);
     }
 
     update(user: User) {
-        return this.http.put('/users/' + user.id, user, this.jwt());
+        return this.http.put(`${this.baseUrl}${this.url }/${user.id}`, user);
     }
 
     delete(id: number) {
-        return this.http.delete('/users/' + id, this.jwt());
-    }
-
-    private jwt() {
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-            return new RequestOptions({ headers: headers });
-        }
+        return this.http.delete(`${this.baseUrl }${this.url }/${id}`);
     }
 }
