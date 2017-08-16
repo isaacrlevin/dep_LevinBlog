@@ -2,28 +2,20 @@ using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Antiforgery;
-
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-
-using Microsoft.AspNetCore.NodeServices;
 using LevinBlog.Database;
 using LevinBlog.Model;
 using LevinBlog.Repository;
 using LevinBlog.Service;
-using Microsoft.DotNet.PlatformAbstractions;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Net.Http.Headers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authorization;
 using Pioneer.Blog.Service;
 using Robotify.AspNetCore;
 
@@ -92,8 +84,6 @@ namespace LevinBlog.Web
       services.AddTransient<IRSSFeedService, RSSFeedService>();
       services.AddTransient<ITagService, TagService>();
       services.AddTransient<IUserService, UserService>();
-      //services.AddTransient<ApplicationEnvironment>();
-      //services.AddTransient<HostingEnvironment>();
 
       services.AddAuthentication(options =>
       {
@@ -146,27 +136,6 @@ namespace LevinBlog.Web
 
       ServiceMapperConfig.Config();
       app.UseAuthentication();
-
-      //if (env.IsDevelopment())
-      //{
-      //  app.UseDeveloperExceptionPage();
-      //  app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-      //  {
-      //    HotModuleReplacement = true
-      //  });
-
-      //  app.UseMvc(routes =>
-      //  {
-      //    routes.MapRoute(
-      //        name: "default",
-      //        template: "{controller=Home}/{action=Index}/{id?}");
-
-      //    routes.MapSpaFallbackRoute(
-      //        name: "spa-fallback",
-      //        defaults: new { controller = "Home", action = "Index" });
-      //  });
-      //  app.UseExceptionHandler("/Home/Error");
-      //}
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
@@ -185,7 +154,7 @@ namespace LevinBlog.Web
         routes.MapRoute(
          "Sitemap",
          "sitemap.xml",
-         new { controller = "Home", action = "SitemapXml" });
+         new { controller = "Home", action = "Sitemap" });
 
         routes.MapRoute(
         "feed",

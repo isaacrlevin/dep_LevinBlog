@@ -36,7 +36,7 @@ namespace LevinBlog.Service
 
             var channel = new XElement("channel");
             channel.Add(new XElement("title", _config.Value.SiteUrl));
-            channel.Add(new XElement("link",$"{_config.Value.SiteUrl}/feed"));
+            channel.Add(new XElement("link",$"{_config.Value.SiteUrl}/rssfeed.xml"));
             channel.Add(new XElement("description", "Incessant Ramblings of a Cloud Enthusiast"));
             channel.Add(new XElement("copyright", DateTime.Now.Year));
             doc.Root.Add(channel);
@@ -45,7 +45,7 @@ namespace LevinBlog.Service
             {
                 var itemElement = new XElement("item");
                 itemElement.Add(new XElement("title", post.Title));
-                itemElement.Add(new XElement("link", post.Url));
+                itemElement.Add(new XElement("link", $"{_config.Value.SiteUrl}/{post.Url}"));
                 itemElement.Add(new XElement("description", post.Description));
                 itemElement.Add(new XElement("category", post.Category.Name));
                 foreach (var c in post.Tags) itemElement.Add(new XElement("tag", c.Name));
