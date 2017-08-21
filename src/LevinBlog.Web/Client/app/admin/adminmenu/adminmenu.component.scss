@@ -1,4 +1,4 @@
-$topnav-background-color: #222;
+$topnav-background-color: lightblue;
 
 .sidebar {
   border-radius: 0;
@@ -26,7 +26,7 @@ $topnav-background-color: #222;
       background: $topnav-background-color;
       border: 0;
       border-radius: 0;
-      color: #999;
+      color: black;
       text-decoration: none;
 
       .fa {
@@ -57,7 +57,7 @@ $topnav-background-color: #222;
       margin-bottom: 0;
 
       a {
-        color: #999;
+        color: black;
         text-decoration: none;
         font-weight: 400;
         background: $topnav-background-color;
@@ -92,7 +92,7 @@ $topnav-background-color: #222;
           border: 0 solid transparent;
 
           a {
-            color: #999;
+            color: black;
           }
 
           a:hover {
@@ -108,40 +108,12 @@ $topnav-background-color: #222;
   }
 }
 
-.nested-menu {
-  .list-group-item {
-    cursor: pointer;
-  }
-
-  .nested {
-    list-style-type: none;
-  }
-
-  ul.submenu {
-    display: none;
-    height: 0;
-  }
-
-  & .expand {
-    ul.submenu {
-      display: block;
-      list-style-type: none;
-      height: auto;
-
-      li {
-        a {
-          color: #FFF;
-          padding: 10px;
-          display: block;
-        }
-      }
-    }
-  }
-}
-
 @media screen and (max-width: 992px) {
   .sidebar {
     top: 54px;
     left: 0px;
+  }
+  .push-right {
+    left: 235px !important;
   }
 }

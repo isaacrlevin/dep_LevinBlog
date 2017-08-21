@@ -45,7 +45,7 @@ namespace LevinBlog.Service
             {
                 var itemElement = new XElement("item");
                 itemElement.Add(new XElement("title", post.Title));
-                itemElement.Add(new XElement("link", $"{_config.Value.SiteUrl}/{post.Url}"));
+                itemElement.Add(new XElement("link", $"{_config.Value.SiteUrl}/post/{post.Url}"));
                 itemElement.Add(new XElement("description", post.Description));
                 itemElement.Add(new XElement("category", post.Category.Name));
                 foreach (var c in post.Tags) itemElement.Add(new XElement("tag", c.Name));

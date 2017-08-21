@@ -12,6 +12,7 @@ export class Post {
   id: number;
   title: string;
   meta: string;
+  keywords: string;
   description: string;
   image: string;
   smallImage: string;

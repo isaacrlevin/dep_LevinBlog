@@ -46,8 +46,10 @@ namespace LevinBlog.Web.Controllers
       // By default we're passing down Cookies, Headers, Host from the Request object here
       TransferData transferData = new TransferData();
       transferData.request = AbstractHttpContextRequestInfo(Request);
-      transferData.appInsightsId = _appSettings.AppInsightsId;
-      // Add more customData here, add it to the TransferData class
+      if (!Debugger.IsAttached)
+      {
+        transferData.appInsightsId = _appSettings.AppInsightsId;
+      }
 
       // Prerender / Serialize application (with Universal)
       var prerenderResult = await Prerenderer.RenderToString(
@@ -68,8 +70,11 @@ namespace LevinBlog.Web.Controllers
       ViewData["Meta"] = prerenderResult.Globals["meta"]; // set our <meta> SEO tags
       ViewData["Links"] = prerenderResult.Globals["links"]; // set our <link rel="canonical"> etc SEO tags
       ViewData["TransferData"] = prerenderResult.Globals["transferData"]; // our transfer data set to window.TRANSFER_CACHE = {};
-      ViewData["GoogleAnalyticsId"] = _appSettings.GoogleAnalyticsId;
-      ViewData["AppInsightsId"] = _appSettings.AppInsightsId;
+      if (!Debugger.IsAttached)
+      {
+        ViewData["GoogleAnalyticsId"] = _appSettings.GoogleAnalyticsId;
+        ViewData["AppInsightsId"] = _appSettings.AppInsightsId;
+      }
       return View();
     }
 

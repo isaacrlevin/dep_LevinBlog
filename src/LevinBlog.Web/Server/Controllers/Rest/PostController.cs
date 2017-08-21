@@ -34,11 +34,11 @@ namespace Pioneer.Blog.Controllers.Web
         bool includeUnpublished = false)
     {
       IEnumerable<Post> cacheEntry;
-      if (!_cache.TryGetValue("GetAllPosts", out cacheEntry))
-      {
-        cacheEntry = _postService.GetAll(includeExceprt, includeArticle, includeUnpublished);
-        _cache.Set("GetAllPosts", cacheEntry, cacheEntryOptions);
-      }
+      // if (!_cache.TryGetValue($"GetAllPosts{includeExceprt}{includeArticle}{includeUnpublished}", out cacheEntry))
+      //{
+      cacheEntry = _postService.GetAll(includeExceprt, includeArticle, includeUnpublished);
+      //  _cache.Set($"GetAllPosts{includeExceprt}{includeArticle}{includeUnpublished}", cacheEntry, cacheEntryOptions);
+      //}
       return cacheEntry;
     }
 
@@ -47,11 +47,11 @@ namespace Pioneer.Blog.Controllers.Web
     public IEnumerable<Post> GetAllByCategory(string category, int? countPerPage, int? currentPageIndex)
     {
       IEnumerable<Post> cacheEntry;
-      if (!_cache.TryGetValue($"GetAllPostsForCategory{category}", out cacheEntry))
-      {
-        cacheEntry = _postService.GetAllByCategory(category, countPerPage ?? 5, currentPageIndex ?? 1);
-        _cache.Set($"GetAllPostsForCategory{category}", cacheEntry, cacheEntryOptions);
-      }
+      //if (!_cache.TryGetValue($"GetAllPostsForCategory{category}", out cacheEntry))
+      //{
+      cacheEntry = _postService.GetAllByCategory(category, countPerPage ?? 5, currentPageIndex ?? 1);
+      //  _cache.Set($"GetAllPostsForCategory{category}", cacheEntry, cacheEntryOptions);
+      //}
       return cacheEntry;
     }
 
@@ -60,25 +60,25 @@ namespace Pioneer.Blog.Controllers.Web
     public IEnumerable<Post> GetAllByTag(string tag, int? countPerPage, int? currentPageIndex)
     {
       IEnumerable<Post> cacheEntry;
-      if (!_cache.TryGetValue($"GetAllPostsForTag{tag}", out cacheEntry))
-      {
+      //if (!_cache.TryGetValue($"GetAllPostsForTag{tag}{countPerPage}{currentPageIndex}", out cacheEntry))
+      //{
         cacheEntry = _postService.GetAllByTag(tag, countPerPage ?? 5, currentPageIndex ?? 1);
-        _cache.Set($"GetAllPostsForTag{tag}", cacheEntry, cacheEntryOptions);
+      //_cache.Set($"GetAllPostsForTag{tag}{countPerPage}{currentPageIndex}", cacheEntry, cacheEntryOptions);
 
-      }
+      //}
       return cacheEntry;
     }
 
     [AllowAnonymous]
     [HttpGet("{url}", Name = "GetPost")]
-    public IActionResult GetById(string url, bool includeExcerpt)
+    public IActionResult GetByUrl(string url, bool includeExcerpt)
     {
       Post cacheEntry;
-      if (!_cache.TryGetValue($"GetById{url}", out cacheEntry))
-      {
-        cacheEntry = _postService.GetByUrl(url, includeExcerpt);
-        _cache.Set($"GetById{url}", cacheEntry, cacheEntryOptions);
-      }
+      //if (!_cache.TryGetValue($"GetById{url}{includeExcerpt}", out cacheEntry))
+      //{
+      cacheEntry = _postService.GetByUrl(url, includeExcerpt);
+      //  _cache.Set($"GetById{url}{includeExcerpt}", cacheEntry, cacheEntryOptions);
+      //}
 
       if (cacheEntry == null)
       {

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Inject, ViewEncapsulation, RendererFactor
 import { Router, NavigationEnd, ActivatedRoute, PRIMARY_OUTLET } from '@angular/router';
 import { Meta, Title, DOCUMENT, MetaDefinition } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
-import { isPlatformServer } from '@angular/common';
+import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import { LinkService } from '../services/link.service';
 
 import { REQUEST } from '../shared/constants/request';
@@ -25,12 +25,20 @@ export class AdminComponent implements OnInit, OnDestroy {
         private title: Title,
         private meta: Meta,
         private linkService: LinkService,
-        @Inject(REQUEST) private request
+        @Inject(REQUEST) private request,
+        @Inject(PLATFORM_ID) private platformId: Object
     ) {
     }
 
     ngOnInit() {
         this._changeTitleOnNavigation();
+    }
+
+    toggleSidebar() {
+        if (isPlatformBrowser(this.platformId)) {
+            const dom: any = document.querySelector('#sidebar');
+            dom.classList.toggle('push-right');
+        }
     }
 
     ngOnDestroy() {

@@ -177,6 +177,13 @@ namespace LevinBlog.Service
                 post.Url = post.Title;
             }
 
+            if (post.Keywords == null)
+            {
+                post.Keywords = string.Empty;
+            }
+
+
+
             post.Category = null;
             post.PostedOn = DateTime.UtcNow;
             post.ModifiedOn = post.PostedOn;

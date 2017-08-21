@@ -51,24 +51,27 @@ export class PostComponent implements OnInit {
                 this.route.data
                     .subscribe((data: { posts: Post[] }) => {
                         this.posts = data.posts;
-                        let title = this.title.getTitle().replace(' - Isaac Levin', '');
-                        if (this.posts.length > 0) {
-                            this.posts.forEach(function (post) {
-                                if (post.category.url.toLowerCase() == title.toLowerCase()) {
-                                    title = post.category.name + ' Posts';
-                                }
-                                post.tags.forEach(function (tag) {
-                                    if (title.toLowerCase() == tag.url.toLowerCase()) {
-                                        title = tag.name + ' Posts';
+                        if (this.title.getTitle() != null) {
+                            let title = this.title.getTitle().replace(' - Isaac Levin', '');
+                            if (this.posts.length > 0) {
+                                this.posts.forEach(function (post) {
+                                    if (post.category.url.toLowerCase() == title.toLowerCase()) {
+                                        title = post.category.name + ' Posts';
                                     }
+                                    post.tags.forEach(function (tag) {
+                                        if (title.toLowerCase() == tag.url.toLowerCase()) {
+                                            title = tag.name + ' Posts';
+                                        }
+                                    });
                                 });
-                            });
-                        }
-                        else {
+                            }
+
+                            else {
+                                this.title.setTitle(title);
+                            }
                             this.title.setTitle(title);
+                            this.setTitle = title;
                         }
-                        this.title.setTitle(title);
-                        this.setTitle = title;
                     });
             }
         });

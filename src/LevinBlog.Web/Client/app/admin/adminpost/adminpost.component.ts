@@ -11,7 +11,7 @@ import { Tag } from '../../models/tag';
 import { Post } from '../../models/post';
 import { Article } from '../../models/article';
 import { Excerpt } from '../../models/excerpt';
-
+declare var CKEDITOR: any;
 @Component({
     selector: 'pc-posts-page',
     templateUrl: './adminpost.component.html'
@@ -30,13 +30,18 @@ export class AdminPostComponent implements OnInit {
     public ckeditorContent: string = '<p>Hello CKEditor</p>';
     public config = {
         uiColor: '#F0F3F4',
-        height: '600'
-    };
+        height: '600',
+        allowedContent: {}
+    }
     title: string = 'Manage Posts';
     constructor(public postService: PostService,
         public categoryService: CategoryService,
         public posttagService: PostTagService,
         public tagService: TagService, @Inject(PLATFORM_ID) private platformId: Object) {
+    }
+
+    helpWindow(post) {
+        window.open('/post/' + post.url, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
     }
 
     selectPost(post: Post): void {
@@ -54,6 +59,18 @@ export class AdminPostComponent implements OnInit {
     ngOnInit(): void {
         if (isPlatformBrowser(this.platformId)) {
             window['CKEDITOR_BASEPATH'] = '//cdn.ckeditor.com/4.6.0/full/';
+
+            this.config.
+            allowedContent = {
+                script: true,
+                    $1: {
+                    // This will set the default set of elements
+                     elements: CKEDITOR.dtd,
+                    attributes: true,
+                        styles: true,
+                            classes: true
+                }
+            }
         }
         this.loading = true;
         this.getAllCategories();
