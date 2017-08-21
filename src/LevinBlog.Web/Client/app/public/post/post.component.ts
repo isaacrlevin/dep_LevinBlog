@@ -91,10 +91,12 @@ export class PostComponent implements OnInit {
 
 
             this.width$.subscribe(a => {
-                let content = this.elRef.nativeElement.querySelector('.language-cs');
-                if (content !== null) {
-                    this.renderer.setStyle(content, "width", (a - 50) + 'px');
-                    this.highLight.highlight(content);
+                let content = this.elRef.nativeElement.querySelectorAll('.language-cs');
+                if (content !== null && content.length > 0) {
+                    for (var i = 0; i < content.length; i++) {
+                        this.renderer.setStyle(content[i], "width", (a - 50) + 'px');
+                        this.highLight.highlight(content[i]);
+                    }
                 }
             });
         }
