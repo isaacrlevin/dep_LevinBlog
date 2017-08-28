@@ -1,0 +1,29 @@
+@media only screen and (max-width: 768px) {
+  img {
+    width: 100px !important
+  }
+}
+
+.image {
+  display: table-cell;
+  padding-left: 30px;
+  float: left;
+  padding: 10px;
+  background-clip: content-box;
+}
+
+img {
+  width: 300px;
+  padding-top: 25px;
+  display: inline-block;
+}
+
+p {
+  font-size: 20px;
+}
+
+/*@media only screen and (max-width: 768px) {
+  p {
+    font-size: 12px !important;
+  }
+}*/

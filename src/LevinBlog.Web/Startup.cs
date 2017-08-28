@@ -141,7 +141,8 @@ namespace LevinBlog.Web
         app.UseDeveloperExceptionPage();
         app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
         {
-          HotModuleReplacement = true
+          HotModuleReplacement = true,
+          HotModuleReplacementEndpoint = "/dist/__webpack_hmr"
         });
       }
       app.UseRobotify();

@@ -1,0 +1,87 @@
+<div *ngIf="posts">
+  <header class="intro-header">
+    <div class="site-heading">
+      <h1>{{setTitle}}</h1>
+    </div>
+  </header>
+  <blog [posts]="posts"></blog>
+</div>
+<div *ngIf="post">
+  <header class="intro-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>{{post.title}}</h1>
+            <span class="meta">Posted by <a href="#">Isaac Levin</a> on {{post.postedOn | date: 'shortDate'}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="article-meta-data list-inline">
+    <span class="article-meta-data-section list-inline-item">
+      <i class="fa fa-calendar" aria-hidden="true"></i> {{post.postedOn | date: 'shortDate'}}
+    </span>
+    <a href="/category/{{post.category.url}}" title="{{post.category.name}}" class="article-meta-data-section list-inline-item">
+      <i class="fa fa-sitemap" aria-hidden="true"></i> {{post.category.name}}
+    </a>
+    <span class="article-meta-data-section list-inline-item">
+      <i class="fa fa-tags" aria-hidden="true"></i>
+      <span *ngFor="let tag of post.tags; let isLast=last">
+        <a href="/tag/{{tag.url}}">{{tag.name}}</a>{{isLast ? '' : ', '}}
+      </span>
+    </span>
+    <a [routerLink]="['/post', post.url]" fragment="discus-comments" class="article-meta-data-section" (click)="gotoHashtag('discus-comments')"><i class="fa fa-comment" aria-hidden="true"></i></a>
+    <a *ngIf="post.link" href="{{post.link}}" title="code" target="_blank" class="article-meta-data-section list-inline-item">
+      <i class="fa fa-code" aria-hidden="true"></i> Code
+    </a>
+  </div>
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div [innerHTML]="post.article.content | safeHtml"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+  <ul class="list-inline text-center social-icons">
+    <li class="list-inline-item">
+      <a href="https://twitter.com/share?url=http://isaaclevin.com/post/{{post.url}}/&text={{post.title}}"
+         onclick="window.open(this.href, 'twitter-share', 'width=550,height=255');return false;"
+         class="twitter">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li class="list-inline-item">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://isaaclevin.com/post/{{post.url}}"
+         onclick="window.open(this.href, 'linkedin-share', 'width=580,height=296');return false;"
+         class="linkedin">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li class="list-inline-item">
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://isaaclevin.com/post/{{post.url}}" onclick="window.open(this.href, 'facebook-share', 'width=580,height=296');return false;"
+         class="facebook">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li class="list-inline-item">
+      <a href="https://plus.google.com/share?url=http://isaaclevin.com/post/{{post.url}}"
+         onclick="window.open(this.href, 'google-share', 'width=580,height=296');return false;"
+         class="google-plus">
+        <i class="fa fa-google-plus"></i>
+      </a>
+    </li>
+    <li class="list-inline-item">
+      <a href="https://reddit.com/submit?url=http://isaaclevin.com/post/{{post.url}}&title={{post.title}}"
+         onclick="window.open(this.href, 'reddit-share', 'width=580,height=550'); return false;"
+         class="reddit">
+        <i class="fa fa-reddit-alien"></i>
+      </a>
+    </li>
+  </ul>
+  <disqus class="container" id="discus-comments" [identifier]="post.id"></disqus>
+</div>

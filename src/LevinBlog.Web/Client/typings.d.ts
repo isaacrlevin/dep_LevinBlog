@@ -1,5 +1,0 @@
-/* 
- *
- * Application typings we need
- *
- */

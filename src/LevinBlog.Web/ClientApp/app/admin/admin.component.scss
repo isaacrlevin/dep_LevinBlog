@@ -1,0 +1,19 @@
+.admin-container {
+  margin-left: 300px;
+  /*-ms-overflow-x: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  overflow: hidden;*/
+}
+
+@media screen and (max-width: 992px) {
+  .admin-container {
+    margin-left: 0px !important;
+  }
+
+  .row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+}

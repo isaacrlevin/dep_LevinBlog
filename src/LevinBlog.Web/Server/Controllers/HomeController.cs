@@ -56,7 +56,7 @@ namespace LevinBlog.Web.Controllers
           "/",
           nodeServices,
           CancellationToken.None,
-          new JavaScriptModuleExport(applicationBasePath + "/Client/dist/main-server"),
+          new JavaScriptModuleExport(applicationBasePath + "/ClientApp/dist/main-server"),
           unencodedAbsoluteUrl,
           unencodedPathAndQuery,
           transferData, // Our simplified Request object & any other CustommData you want to send!

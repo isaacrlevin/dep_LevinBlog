@@ -1,0 +1,24 @@
+<nav *ngIf="loadingService.loaded === true" class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+          aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" routerLink="/">Home</a>
+  <div class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" [(ngModel)]="search" type="text" placeholder="Search">
+    <span (click)="searchPosts()" class="fa fa-search" style="position: relative;z-index: 1;left: -35px;cursor:pointer;width: 0;"></span>
+  </div>
+  <div [collapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="exCollapsingNavbar2">
+      <ul class="navbar-nav ml-auto mt-2 mt-md-0">
+        <li class="nav-item" style="margin-right:10px">
+          <a routerLink="/blog" [routerLinkActive]="['router-link-active']" class="list-group-item">Blog</a>
+        </li>
+        <li class="nav-item" style="margin-right:10px">
+          <a routerLink="/about" [routerLinkActive]="['router-link-active']" class="list-group-item">About</a>
+        </li>
+        <li class="nav-item" style="margin-right:10px">
+          <a routerLink="/search" [routerLinkActive]="['router-link-active']" class="list-group-item">Search</a>
+        </li>
+      </ul>
+  </div>
+</nav>

@@ -1,0 +1,13 @@
+<nav class="sidebar" id="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+    <ul class="list-group">
+        <a routerLink="/admin/post" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Post' }}
+        </a>
+        <a [routerLink]="['/admin/tag']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;{{ 'Tag'  }}
+        </a>
+        <a [routerLink]="['/admin/category']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;{{ 'Category'  }}
+        </a>
+    </ul>
+</nav>
