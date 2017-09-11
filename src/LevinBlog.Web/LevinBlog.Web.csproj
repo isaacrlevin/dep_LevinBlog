@@ -6,6 +6,7 @@
     <IsPackable>false</IsPackable>
     <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Configurations>Debug;Production</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <!-- Files not to show in IDE -->
