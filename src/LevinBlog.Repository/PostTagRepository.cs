@@ -59,9 +59,13 @@ namespace LevinBlog.Repository
         /// <param name="postTags">Post Tags to Sync</param>
         public void Sync(List<PostTagEntity> postTags)
         {
-            _blogContext.PostTags.RemoveRange(_blogContext.PostTags.Where(a=> a.PostId == postTags.FirstOrDefault().PostId));
-            _blogContext.AddRange(postTags);
-            _blogContext.SaveChanges();
+            if (postTags != null && postTags.Count > 0)
+            {
+
+                _blogContext.PostTags.RemoveRange(_blogContext.PostTags.Where(a => a.PostId == postTags.FirstOrDefault().PostId));
+                _blogContext.AddRange(postTags);
+                _blogContext.SaveChanges();
+            }
         }
     }
 }

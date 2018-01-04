@@ -7,8 +7,7 @@
         <div class="large-12 columns">
 
           <div class="clearfix" style="margin-left:20px">
-            <button class="button tiny secondary float-left"
-                    (click)="selectPost()">
+            <button class="button tiny secondary float-left" (click)="selectPost()">
               Add
             </button>
           </div>
@@ -54,12 +53,10 @@
       <div class="row">
         <div class="large-12 columns">
           <div class="clearfix">
-            <button class="button tiny secondary float-lefft save"
-                    (click)="showEdit = false">
+            <button class="button tiny secondary float-lefft save" (click)="reset()">
               Go Back
             </button>
-            <button class="button tiny secondary float-right save"
-                    (click)="save(selectedPost)">
+            <button class="button tiny secondary float-right save" (click)="save(selectedPost)">
               Save
             </button>
           </div>
@@ -69,97 +66,80 @@
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Title</label>
 
-          <input type="text"
-                 [(ngModel)]="selectedPost.title">
+          <input type="text" [(ngModel)]="selectedPost.title">
 
         </div>
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Url</label>
 
-          <input type="text"
-                 [(ngModel)]="selectedPost.url">
+          <input type="text" [(ngModel)]="selectedPost.url">
 
         </div>
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Code Link</label>
 
-          <input type="text"
-                 [(ngModel)]="selectedPost.link">
+          <input type="text" [(ngModel)]="selectedPost.link">
 
         </div>
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Keywords</label>
-          <input type="text"
-                 [(ngModel)]="selectedPost.keywords">
+          <input type="text" [(ngModel)]="selectedPost.keywords">
 
         </div>
       </div>
       <div class="row">
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Large Image</label>
-          <input type="text"
-                 [(ngModel)]="selectedPost.image">
+          <input type="text" [(ngModel)]="selectedPost.image">
         </div>
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Small Image</label>
-          <input type="text"
-                 [(ngModel)]="selectedPost.smallImage">
+          <input type="text" [(ngModel)]="selectedPost.smallImage">
         </div>
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Icon Image</label>
-          <input type="text"
-                 [(ngModel)]="selectedPost.iconImage">
+          <input type="text" [(ngModel)]="selectedPost.iconImage">
 
         </div>
       </div>
       <div class="row">
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Created On</label>
-          <input type="text"
-                 [ngModel]="selectedPost.createdOn | date:'MM-dd-yyyy'"
-                 disabled>
+          <input type="text" [ngModel]="selectedPost.createdOn | date:'MM-dd-yyyy'" disabled>
 
         </div>
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Posted On</label>
-          <input type="text"
-                 [ngModel]="selectedPost.postedOn | date:'MM-dd-yyyy'"
-                 disabled>
+          <input type="text" [ngModel]="selectedPost.postedOn | date:'MM-dd-yyyy'" disabled>
 
         </div>
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Modified On</label>
-          <input type="text"
-                 [ngModel]="selectedPost.modifiedOn | date:'MM-dd-yyyy'"
-                 disabled>
+          <input type="text" [ngModel]="selectedPost.modifiedOn | date:'MM-dd-yyyy'" disabled>
 
         </div>
         <div class="large-3 columns" style="padding-right:50px">
           <label class="d-block">Published</label>
-          <input id="published" type="checkbox"
-                 [checked]="selectedPost.published"
-                 (change)="selectedPost.published = !selectedPost.published">
+          <input id="published" type="checkbox" [checked]="selectedPost.published" (change)="selectedPost.published = !selectedPost.published">
         </div>
       </div>
       <div class="row">
         <div class="col-lg-5">
           <label class="d-block">Description <span>({{getDescriptionLength()}})</span></label>
 
-          <textarea [(ngModel)]="selectedPost.description" style="width:100%"
-                    class="admin-post-description" rows="4"></textarea>
+          <textarea [(ngModel)]="selectedPost.description" style="width:100%" class="admin-post-description" rows="4"></textarea>
 
         </div>
         <div class="col-lg-5">
           <label class="d-block">Excerpt</label>
-          <textarea [(ngModel)]="selectedPost.excerpt.content"style="width:100%"
-                    *ngIf="selectedPost.excerpt" rows="4"></textarea>
+          <textarea [(ngModel)]="selectedPost.excerpt.content" style="width:100%" *ngIf="selectedPost.excerpt" rows="4"></textarea>
 
         </div>
       </div>
       <div class="row">
         <div class="large-6 columns">
           <label class="d-block">Article</label>
-          <ckeditor [(ngModel)]="selectedPost.article.content" [config]="config"></ckeditor>
+          <ckeditor [(ngModel)]="selectedPost.article.content" debounce="500" [config]="config"></ckeditor>
 
         </div>
       </div>

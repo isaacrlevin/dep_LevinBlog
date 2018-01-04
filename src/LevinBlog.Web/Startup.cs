@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Pioneer.Blog.Service;
 using Robotify.AspNetCore;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.AspNetCore;
+using Microsoft.Extensions.Options;
+using Microsoft.ApplicationInsights.SnapshotCollector;
 
 namespace LevinBlog.Web
 {
@@ -39,18 +44,35 @@ namespace LevinBlog.Web
 
       host.Run();
     }
-
-    public Startup(IHostingEnvironment env)
+    private class SnapshotCollectorTelemetryProcessorFactory : ITelemetryProcessorFactory
     {
+      private readonly IServiceProvider _serviceProvider;
+
+      public SnapshotCollectorTelemetryProcessorFactory(IServiceProvider serviceProvider) =>
+          _serviceProvider = serviceProvider;
+
+      public ITelemetryProcessor Create(ITelemetryProcessor next)
+      {
+        var snapshotConfigurationOptions = _serviceProvider.GetService<IOptions<SnapshotCollectorConfiguration>>();
+        return new SnapshotCollectorTelemetryProcessor(next, configuration: snapshotConfigurationOptions.Value);
+      }
+    }
+
+    public Startup(IConfiguration config, IHostingEnvironment env)
+    {
+
+      var configRoot = (IConfigurationRoot)config;
+      configRoot.Providers.ToList().Clear();
+
       var builder = new ConfigurationBuilder()
-          .SetBasePath(env.ContentRootPath)
-          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-          .AddEnvironmentVariables();
+           .SetBasePath(env.ContentRootPath)
+           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+           .AddEnvironmentVariables();
       Configuration = builder.Build();
     }
 
-    public IConfigurationRoot Configuration { get; }
+    public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -58,6 +80,11 @@ namespace LevinBlog.Web
       // Add framework services.
       services.AddCors();
       services.AddMvc();
+      services.Configure<SnapshotCollectorConfiguration>(Configuration.GetSection(nameof(SnapshotCollectorConfiguration)));
+
+      // Add SnapshotCollector telemetry processor.
+      services.AddSingleton<ITelemetryProcessorFactory>(sp => new SnapshotCollectorTelemetryProcessorFactory(sp));
+
       services.AddNodeServices();
       services.AddMemoryCache();
       services.AddRobotify(Configuration);
@@ -144,6 +171,7 @@ namespace LevinBlog.Web
           HotModuleReplacement = true,
           HotModuleReplacementEndpoint = "/dist/__webpack_hmr"
         });
+        TelemetryConfiguration.Active.DisableTelemetry = true;
       }
       app.UseRobotify();
       app.UseMvc(routes =>
