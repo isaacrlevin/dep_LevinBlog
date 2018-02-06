@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "LevinBlog"
+  },
+  "apps": [
+    {
+      "root": "ClientApp"
+    }
+  ],
+  "defaults": {
+    "styleExt": "scss",
+    "component": {
+      "spec": false
+    }
+  },
+  "styles": [
+    "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+    "styles.css"
+  ],
+  "lint": [
+    {
+      "project": "ClientApp/tsconfig.app.json"
+    },
+    {
+      "project": "ClientApp/tsconfig.spec.json"
+    }
+  ]
+}

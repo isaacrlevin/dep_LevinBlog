@@ -1,16 +1,18 @@
-﻿using LevinBlog.Database.Entity.Models;
+﻿using LevinBlog.Database.Entity;
+using LevinBlog.Database.Entity.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using LevinBlog.Database.Entity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 
 namespace LevinBlog.Database
 {
     public class BlogContext : DbContext
     {
-        public BlogContext(DbContextOptions<BlogContext> options) : base(options) { }
+        public BlogContext(DbContextOptions<BlogContext> options) : base(options)
+        {
+        }
+
         public DbSet<ContactEntity> Contacts { get; set; }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<PostEntity> Posts { get; set; }
@@ -19,6 +21,7 @@ namespace LevinBlog.Database
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ArticleEntity> Articles { get; set; }
         public DbSet<ExcerptEntity> Excerpts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -1,8 +1,6 @@
 ﻿using LevinBlog.Model;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml.Linq;
 
 namespace LevinBlog.Service
@@ -29,6 +27,7 @@ namespace LevinBlog.Service
             _categoryService = categoryService;
             _config = config;
         }
+
         public string GetRSSFeed()
         {
             var doc = new XDocument(new XElement("rss"));
@@ -36,7 +35,7 @@ namespace LevinBlog.Service
 
             var channel = new XElement("channel");
             channel.Add(new XElement("title", _config.Value.SiteUrl));
-            channel.Add(new XElement("link",$"{_config.Value.SiteUrl}/rssfeed.xml"));
+            channel.Add(new XElement("link", $"{_config.Value.SiteUrl}/rssfeed.xml"));
             channel.Add(new XElement("description", "Incessant Ramblings of a Cloud Enthusiast"));
             channel.Add(new XElement("copyright", DateTime.Now.Year));
             doc.Root.Add(channel);

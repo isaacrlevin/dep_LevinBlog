@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace LevinBlog.Database.Entity
 {
     [Table("Categories")]
-    public class CategoryEntity :BaseEntity
+    public class CategoryEntity : BaseEntity
     {
         [MaxLength(100)]
         [StringLength(100)]

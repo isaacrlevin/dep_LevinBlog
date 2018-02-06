@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using LevinBlog.Database;
+﻿using LevinBlog.Database;
 using LevinBlog.Database.Entity;
 using LevinBlog.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LevinBlog.Repository
 {
     public interface ITagRepository
     {
         IEnumerable<TagEntity> GetAll();
+
         IEnumerable<TagEntity> GetAllPaged(int count, int page);
+
         TagEntity GetById(int id);
+
         TagEntity Add(TagEntity tagEntity);
+
         void Update(Tag tag);
+
         void Remove(int id);
     }
 

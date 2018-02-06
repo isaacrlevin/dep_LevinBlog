@@ -7,10 +7,11 @@ namespace LevinBlog.Repository
     public interface IContactRepository
     {
         ContactEntity Add(ContactEntity contactEntity);
+
         ContactEntity GetByEmail(string email);
     }
 
-	public class ContactRepository : IContactRepository
+    public class ContactRepository : IContactRepository
     {
         private readonly BlogContext _blogContext;
 
@@ -18,6 +19,7 @@ namespace LevinBlog.Repository
         {
             _blogContext = blogContext;
         }
+
         /// <summary>
         /// Add Entity
         /// </summary>

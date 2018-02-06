@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using LevinBlog.Database.Entity;
 using LevinBlog.Model;
 using LevinBlog.Repository;
-using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LevinBlog.Service
 {
     public interface ITagService
     {
         IEnumerable<Tag> GetAll();
+
         IEnumerable<Tag> GetAllPaged(int count, int page = 1);
+
         string GetTagNameFromTagUrlInTagCollection(string tagUrl, List<Tag> tags);
+
         Tag GetById(int id);
+
         Tag Add(Tag tag);
+
         void Update(Tag tag);
+
         void Remove(int id);
     }
 

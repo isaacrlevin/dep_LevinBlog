@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using LevinBlog.Database;
+﻿using LevinBlog.Database;
 using LevinBlog.Repository;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace LevinBlog.Tests.RepositoryTests
 {
@@ -35,7 +35,7 @@ namespace LevinBlog.Tests.RepositoryTests
                     var service = new PostRepository(context);
                     service.Add(new Database.Entity.PostEntity
                     {
-                         Title = "This is a test post!!!"
+                        Title = "This is a test post!!!"
                     });
                 }
 

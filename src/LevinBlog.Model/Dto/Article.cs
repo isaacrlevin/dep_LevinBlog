@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LevinBlog.Model
+﻿namespace LevinBlog.Model
 {
-  public  class Article
+    public class Article
     {
         public int Id { get; set; }
 

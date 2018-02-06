@@ -1,29 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using LevinBlog.Database.Entity;
 using LevinBlog.Model;
 using LevinBlog.Repository;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LevinBlog.Service
 {
     public interface IPostService
     {
         int GetTotalNumberOfPosts();
+
         int GetTotalNumberOfPostsByCategory(string category);
+
         int GetTotalNumberOfPostByTag(string tag);
+
         Post GetById(int id, bool includeExcerpt = false);
+
         Post GetByUrl(string url, bool includeExcerpt = false);
+
         IEnumerable<Post> GetAll(bool includeExcerpt = true, bool includeArticle = true, bool includeUnpublished = false, int? top = null);
+
         IEnumerable<Post> GetAllPaged(int count, int page = 1, bool includeUnpublished = false);
+
         IEnumerable<Post> GetAllByTag(string tag, int count, int page = 1);
+
         IEnumerable<Post> GetAllByCategory(string category, int count, int page = 1);
+
         IEnumerable<Post> GetPreviousCurrentNextPost(string id);
+
         Post Add(Post post);
+
         void Update(Post post);
+
         void Remove(string url);
     }
 
@@ -181,8 +192,6 @@ namespace LevinBlog.Service
             {
                 post.Keywords = string.Empty;
             }
-
-
 
             post.Category = null;
             post.PostedOn = DateTime.UtcNow;

@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using LevinBlog.Model;
 using LevinBlog.Service;
 using Microsoft.AspNetCore.Authorization;
-using LevinBlog.Model;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace LevinBlog.Web.Server.Controllers.Rest
 {
@@ -20,6 +16,7 @@ namespace LevinBlog.Web.Server.Controllers.Rest
     {
       _categoryService = categoryService;
     }
+
     [AllowAnonymous]
     [HttpGet]
     public IEnumerable<Category> GetAll(int? count, int? page)
@@ -31,6 +28,7 @@ namespace LevinBlog.Web.Server.Controllers.Rest
 
       return _categoryService.GetAllPaged((int)count, (int)page);
     }
+
     [AllowAnonymous]
     [HttpGet("{id}", Name = "GetCategory")]
     public IActionResult GetById(int id)

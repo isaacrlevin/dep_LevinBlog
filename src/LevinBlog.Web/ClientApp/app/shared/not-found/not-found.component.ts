@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'not-found',
-    //templateUrl: './not-found.component.html'
-    template: `
+  selector: 'not-found',
+  //templateUrl: './not-found.component.html'
+  template: `
 <header class="intro-header">
   <div class="site-heading" style="display:table; margin: 0 auto">
     <div style="display:table-cell">
@@ -20,10 +20,10 @@ import { Component, OnInit } from '@angular/core';
   </div>
 </div>
 `
-    // styleUrls: ['./not-found.component.css']
+  // styleUrls: ['./not-found.component.css']
 })
 export class NotFoundComponent implements OnInit {
-    constructor() { }
+  constructor() { }
 
-    ngOnInit() { }
+  ngOnInit() { }
 }

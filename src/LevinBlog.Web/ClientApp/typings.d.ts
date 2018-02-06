@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * Application typings we need
  *

@@ -1,12 +1,10 @@
-using Microsoft.AspNetCore.Mvc.Razor.Internal;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+using LevinBlog.Model;
 using LevinBlog.Service;
 using Microsoft.AspNetCore.Authorization;
-using LevinBlog.Model;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace Pioneer.Blog.Controllers.Web
+namespace LevinBlog.Controllers.Web
 {
   [Authorize]
   [Route("api/search")]
@@ -22,6 +20,7 @@ namespace Pioneer.Blog.Controllers.Web
       _searchService = searchService;
       _postTagService = postTagService;
     }
+
     [AllowAnonymous]
     [HttpGet("{query}")]
     public IEnumerable<Post> GetQuery(string query)

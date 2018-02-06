@@ -1,4 +1,5 @@
 {
+  "defaultSeverity": "warn",
   "rules": {
     "align": false,
     "ban": false,
@@ -8,31 +9,19 @@
       "check-space"
     ],
     "component-class-suffix": true,
-    "component-selector-name": [
+    "component-selector": [
       true,
+      "element",
+      "app",
       "kebab-case"
-    ],
-    "component-selector-prefix": [
-      true,
-      "app"
-    ],
-    "component-selector-type": [
-      true,
-      "element"
     ],
     "curly": false,
     "directive-class-suffix": true,
-    "directive-selector-name": [
+    "directive-selector": [
       true,
+      "attribute",
+      "app",
       "camelCase"
-    ],
-    "directive-selector-prefix": [
-      true,
-      "app"
-    ],
-    "directive-selector-type": [
-      true,
-      "attribute"
     ],
     "eofline": true,
     "forin": true,
@@ -44,7 +33,6 @@
     "interface-name": false,
     "jsdoc-format": true,
     "label-position": true,
-    "label-undefined": true,
     "max-line-length": [
       true,
       200
@@ -73,7 +61,6 @@
     "no-construct": true,
     "no-constructor-vars": false,
     "no-debugger": true,
-    "no-duplicate-key": true,
     "no-duplicate-variable": true,
     "no-empty": false,
     "no-eval": true,
@@ -88,9 +75,8 @@
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": false,
-    "no-unreachable": true,
     "no-unused-expression": true,
-    "no-unused-variable": false,
+    "no-unused-variable": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "no-var-requires": false,
@@ -153,10 +139,6 @@
     "use-life-cycle-interface": true,
     "use-output-property-decorator": true,
     "use-pipe-transform-interface": true,
-    "use-strict": [
-      true,
-      "check-module"
-    ],
     "variable-name": [
       true,
       "check-format",

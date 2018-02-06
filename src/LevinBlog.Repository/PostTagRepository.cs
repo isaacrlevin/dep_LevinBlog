@@ -1,14 +1,14 @@
-﻿using LevinBlog.Model;
-using System.Linq;
-using LevinBlog.Database;
+﻿using LevinBlog.Database;
 using LevinBlog.Database.Entity;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LevinBlog.Repository
 {
     public interface IPostTagRepository
     {
         PostTagEntity Add(PostTagEntity map);
+
         void RemoveByCompound(PostTagEntity map);
 
         void Sync(List<PostTagEntity> postTags);
@@ -61,7 +61,6 @@ namespace LevinBlog.Repository
         {
             if (postTags != null && postTags.Count > 0)
             {
-
                 _blogContext.PostTags.RemoveRange(_blogContext.PostTags.Where(a => a.PostId == postTags.FirstOrDefault().PostId));
                 _blogContext.AddRange(postTags);
                 _blogContext.SaveChanges();

@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using LevinBlog.Model;
 using LevinBlog.Service;
 using Microsoft.AspNetCore.Authorization;
-using LevinBlog.Model;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace LevinBlog.Web.Server.Controllers.Rest
 {
   [Authorize]
   [Route("[controller]")]
   public class TagsController : Controller
-    {
+  {
     private readonly ITagService _tagService;
 
     public TagsController(ITagService tagService)
@@ -32,6 +28,7 @@ namespace LevinBlog.Web.Server.Controllers.Rest
 
       return _tagService.GetAllPaged((int)count, (int)page);
     }
+
     [AllowAnonymous]
     [HttpGet("{id}", Name = "GetTag")]
     public IActionResult GetById(int id)

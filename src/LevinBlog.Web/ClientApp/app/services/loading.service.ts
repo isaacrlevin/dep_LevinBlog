@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map'
 
 @Injectable()
 export class LoadingService {
-    constructor() { }
+  constructor() { }
 
-    public loaded: boolean;
+  public loaded: boolean;
 }

@@ -1,33 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using LevinBlog.Database;
+﻿using LevinBlog.Database;
 using LevinBlog.Database.Entity;
-using System.Linq;
+using LevinBlog.Model;
+
 //using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore;
-using LevinBlog.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LevinBlog.Repository
 {
     public interface IPostRepository
     {
         int GetTotalNumberOfPosts();
+
         int GetTotalNumberOfPostsByCategory(string category);
+
         int GetTotalNumberOfPostByTag(string tag);
+
         PostEntity GetByUrl(string url, bool includeExcerpt);
+
         PostEntity GetById(int id, bool includeExcerpt);
+
         IEnumerable<PostEntity> GetTop(int top);
+
         IEnumerable<PostEntity> GetAll(bool includeExcerpt, bool includeArticle, bool includeUnpublished);
+
         IEnumerable<PostEntity> GetAllPaged(int count, int page = 1, bool includeUnpublished = false);
+
         IEnumerable<PostEntity> GetQueryPaged(string query, int count, int page = 1);
+
         int GetQueryPagedCount(string query);
+
         IEnumerable<PostEntity> GetAllByTagPaged(string tag, int count, int page = 1);
+
         IEnumerable<PostEntity> GetAllByCategoryPaged(string category, int count, int page = 1);
+
         IEnumerable<PostEntity> GetPostsBasedOnIdCollection(List<int> postIds);
+
         PostEntity GetPreviousBasedOnId(int id);
+
         PostEntity GetNextBasedOnId(int id);
+
         PostEntity Add(PostEntity post);
+
         void Update(Post post);
+
         void Remove(string url);
     }
 
@@ -364,7 +382,7 @@ namespace LevinBlog.Repository
             entity.Link = post.Link;
             entity.ModifiedOn = DateTime.UtcNow;
 
-            if (!entity.Published && post.Published )
+            if (!entity.Published && post.Published)
             {
                 entity.PostedOn = DateTime.UtcNow;
             }

@@ -4,22 +4,21 @@ import { SignupService, CategoryService, PostService } from '../../services/inde
 import { ActivatedRoute, Router } from '@angular/router';
 //import { fadeInAnimation } from '../../shared/fade-in.animation';
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-   // animations: [fadeInAnimation],
-   // host: { '[@fadeInAnimation]': '' }
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  // animations: [fadeInAnimation],
+  // host: { '[@fadeInAnimation]': '' }
 })
 export class HomeComponent implements OnInit {
-    loading = false;
-    posts: Post[];
-    constructor(private postService: PostService, private route: ActivatedRoute,
-        private router: Router) { }
+  loading = false;
+  posts: Post[];
+  constructor(private postService: PostService, private route: ActivatedRoute,
+    private router: Router) { }
 
-    ngOnInit() {
-
-        this.route.data
-            .subscribe((data: { posts: Post[] }) => {
-                this.posts = data.posts;
-            });
-    }
+  ngOnInit() {
+    this.route.data
+      .subscribe((data: { posts: Post[] }) => {
+        this.posts = data.posts;
+      });
+  }
 }

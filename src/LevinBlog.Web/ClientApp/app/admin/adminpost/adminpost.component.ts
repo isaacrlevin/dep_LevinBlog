@@ -76,7 +76,6 @@ export class AdminPostComponent implements OnInit {
     this.getAllCategories();
     this.getAllTags();
     this.getAllPosts();
-
   }
 
   getAllPosts(): void {
@@ -204,11 +203,9 @@ export class AdminPostComponent implements OnInit {
   }
 
   removeTag(tag: Tag): void {
-
     for (let i = 0; i < this.selectedPost.tags.length; i++) {
       if (tag.id === this.selectedPost.tags[i].id) {
         this.selectedPost.tags.splice(i, 1);
-
       }
     }
   }

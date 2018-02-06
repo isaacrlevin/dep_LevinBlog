@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using LevinBlog.Model;
-using Microsoft.AspNetCore.Authorization;
 using LevinBlog.Service;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LevinBlog.Web.Server.Controllers.Rest
 {
@@ -29,7 +24,6 @@ namespace LevinBlog.Web.Server.Controllers.Rest
     public void Send([FromBody]SignUpViewModel model)
     {
       var response = _communicationService.SignUpToMailingList(model);
-
     }
   }
 }

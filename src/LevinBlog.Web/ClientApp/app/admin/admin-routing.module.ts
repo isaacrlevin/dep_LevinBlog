@@ -7,20 +7,19 @@ import { AdminHomeComponent } from './adminhome/adminhome.component';
 import { AdminCategoryComponent } from './admincategory/admincategory.component';
 import { AuthGuard } from './auth.guard';
 export const routes: Routes = [
-    {
-        path: '',
-        component: AdminComponent, canActivate: [AuthGuard],
-        children: [
-            { path: 'tag', component: AdminTagComponent },
-            { path: 'category', component: AdminCategoryComponent },
-            { path: 'post', component: AdminPostComponent },
-            { path: '', component: AdminHomeComponent }
-        ]
-    }
+  {
+    path: '',
+    component: AdminComponent, canActivate: [AuthGuard],
+    children: [
+      { path: 'tag', component: AdminTagComponent },
+      { path: 'category', component: AdminCategoryComponent },
+      { path: 'post', component: AdminPostComponent },
+      { path: '', component: AdminHomeComponent }
+    ]
+  }
 ];
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AdminRoutingModule { }
-

@@ -1,12 +1,13 @@
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+using LevinBlog.Model;
 using LevinBlog.Service;
 using Microsoft.AspNetCore.Authorization;
-using LevinBlog.Model;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System;
-namespace Pioneer.Blog.Controllers.Web
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LevinBlog.Controllers.Web
 {
   [Authorize]
   [Route("api/posts")]
@@ -16,6 +17,7 @@ namespace Pioneer.Blog.Controllers.Web
     private readonly IPostTagService _postTagService;
     private IMemoryCache _cache;
     private MemoryCacheEntryOptions cacheEntryOptions;
+
     public PostApiController(IPostService postService, IPostTagService postTagService, IMemoryCache cache)
     {
       _postService = postService;
@@ -62,7 +64,7 @@ namespace Pioneer.Blog.Controllers.Web
       IEnumerable<Post> cacheEntry;
       //if (!_cache.TryGetValue($"GetAllPostsForTag{tag}{countPerPage}{currentPageIndex}", out cacheEntry))
       //{
-        cacheEntry = _postService.GetAllByTag(tag, countPerPage ?? 5, currentPageIndex ?? 1);
+      cacheEntry = _postService.GetAllByTag(tag, countPerPage ?? 5, currentPageIndex ?? 1);
       //_cache.Set($"GetAllPostsForTag{tag}{countPerPage}{currentPageIndex}", cacheEntry, cacheEntryOptions);
 
       //}

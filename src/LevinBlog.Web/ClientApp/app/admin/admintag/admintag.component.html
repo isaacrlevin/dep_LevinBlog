@@ -1,7 +1,7 @@
 <h1 style="margin-bottom:50px; margin-top:50px">{{title}}</h1>
 <pc-loader [loading]="loading"></pc-loader>
 <button class="button tiny secondary float-left"
-        (click)="selectItem(selectedTag); staticModal.show()">
+        (click)="selectItem(selectedTag); openModal(template)">
   Add New Tag
 </button>
 <div class="card-block table-responsive">
@@ -18,7 +18,7 @@
     <tbody>
       <tr *ngFor="let tag of tags">
         <td>
-          <button type="button" (click)="selectItem(tag); staticModal.show()">
+          <button type="button" (click)="selectItem(tag); openModal(template)">
             <i class="fa fa-fw fa-edit"></i>
           </button>
           <button type="button" (click)="remove(tag.id)">
@@ -33,39 +33,34 @@
     </tbody>
   </table>
 </div>
-
-<div bsModal #staticModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">Add/Edit Tag</h2>
-        <button type="button" class="close" (click)="staticModal.hide()" aria-hidden="true">x</button>
-      </div>
-      <div class="modal-body">
-        <h5>Tag Details</h5>
-        <div class="form-group">
-          <label>Tag Name</label>
-          <input type="text" class="form-control" [(ngModel)]="selectedTag.name" placeholder="Enter Name">
-        </div>
-        <div class="form-group">
-          <label>Url</label>
-          <input type="text" class="form-control" [(ngModel)]="selectedTag.url" placeholder="Enter Url">
-        </div>
-        <div class="form-group">
-          <label>
-            Active
-          </label>
-          <div class="form-control-static checkbox-ios">
-            <label class="switch">
-              <input type="checkbox" class="ios" [(ngModel)]="selectedTag.isActive"><i></i>
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="staticModal.hide()">Close</button>
-        <button type="button" (click)="save(); staticModal.hide()" class="btn btn-primary">Save</button>
+<ng-template #template>
+  <div class="modal-header">
+    <h2 class="modal-title" id="myModalLabel">Add/Edit Tag</h2>
+    <button type="button" class="close" (click)="closeModal()" aria-hidden="true">x</button>
+  </div>
+  <div class="modal-body">
+    <h5>Tag Details</h5>
+    <div class="form-group">
+      <label>Tag Name</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedTag.name" placeholder="Enter Name">
+    </div>
+    <div class="form-group">
+      <label>Url</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedTag.url" placeholder="Enter Url">
+    </div>
+    <div class="form-group">
+      <label>
+        Active
+      </label>
+      <div class="form-control-static checkbox-ios">
+        <label class="switch">
+          <input type="checkbox" class="ios" [(ngModel)]="selectedTag.isActive"><i></i>
+        </label>
       </div>
     </div>
   </div>
-</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+    <button type="button" (click)="save(); closeModal()" class="btn btn-primary">Save</button>
+  </div>
+</ng-template>

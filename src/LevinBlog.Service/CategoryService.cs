@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using LevinBlog.Database.Entity;
 using LevinBlog.Model;
 using LevinBlog.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LevinBlog.Service
 {
     public interface ICategoryService
     {
         IEnumerable<Category> GetAll();
+
         IEnumerable<Category> GetAllPaged(int count, int page);
+
         Category GetById(int id);
+
         Category Add(Category category);
+
         void Update(Category item);
+
         void Remove(int id);
     }
 
@@ -61,7 +65,6 @@ namespace LevinBlog.Service
         {
             return Mapper.Map<CategoryEntity, Category>(_categoryRepository.GetById(id));
         }
-
 
         /// <summary>
         /// Create Category record

@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
-using LevinBlog.Database;
+﻿using LevinBlog.Database;
 using LevinBlog.Database.Entity;
-using System.Linq;
 using LevinBlog.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LevinBlog.Repository
 {
     public interface ICategoryRepository
     {
         IEnumerable<CategoryEntity> GetAll();
+
         IEnumerable<CategoryEntity> GetAllPaged(int count, int page);
+
         CategoryEntity GetById(int id);
+
         CategoryEntity Add(CategoryEntity categoryEntity);
+
         void Update(Category category);
+
         void Remove(int id);
     }
 

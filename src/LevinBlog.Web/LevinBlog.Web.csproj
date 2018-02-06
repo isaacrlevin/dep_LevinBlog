@@ -1,44 +1,33 @@
-﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
+<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework Condition="'$(TargetFrameworkOverride)' == ''">netcoreapp2.0</TargetFramework>
     <TargetFramework Condition="'$(TargetFrameworkOverride)' != ''">TargetFrameworkOverride</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <IsPackable>false</IsPackable>
-    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <Configurations>Debug;Production</Configurations>
+    <ApplicationInsightsResourceId>/subscriptions/a07802f5-f8df-47d8-9b88-79ba55cfb396/resourcegroups/LevinBlog/providers/microsoft.insights/components/LevinBlog</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/a07802f5-f8df-47d8-9b88-79ba55cfb396/resourcegroups/LevinBlog/providers/microsoft.insights/components/LevinBlog</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
-  <ItemGroup>
+   <ItemGroup>
     <!-- Files not to show in IDE -->
-    <None Remove="ClientApp\app\services\signup.service.ts" />
-    <None Remove="ClientApp\app\services\user.service.ts" />
-    <None Remove="ClientApp\app\shared\fade-in.animation.ts" />
-    <None Remove="ClientApp\app\shared\loader.component.ts" />
-    <None Remove="ClientApp\app\shared\truncate.pipe.ts" />
+    <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Remove="Properties\PublishProfiles\LevinBlog - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\LevinBlogWeb20180206121046 - Web Deploy.pubxml" />
     <None Remove="yarn.lock" />
-    <Compile Remove="ClientApp\app\guards\**" />
-    <Compile Remove="ClientApp\app\public\components\**" />
-    <Compile Remove="ClientApp\app\public\services\**" />
-    <Compile Remove="webpack\**" />
-    <Content Remove="webpack\**" />
     <Content Remove="wwwroot\dist\**" />
-    <None Remove="ClientApp\app\guards\**" />
-    <None Remove="ClientApp\app\public\components\**" />
-    <None Remove="ClientApp\app\public\services\**" />
     <None Remove="ClientApp\dist\**" />
-    <None Remove="webpack\**" />
     <Content Remove="coverage\**" />
 
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Content Remove="ClientApp\**" />
-    <EmbeddedResource Remove="ClientApp\app\guards\**" />
-    <EmbeddedResource Remove="ClientApp\app\public\components\**" />
-    <EmbeddedResource Remove="ClientApp\app\public\services\**" />
-    <EmbeddedResource Remove="webpack\**" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFrameworkOverride)' == ''">
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
@@ -47,6 +36,7 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.SnapshotCollector" Version="1.0.10" />
     <PackageReference Include="Robotify.AspNetCore" Version="0.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LevinBlog.Database\LevinBlog.Database.csproj" />
@@ -55,19 +45,13 @@
     <ProjectReference Include="..\LevinBlog.Service\LevinBlog.Service.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\app-routing.module.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\auth-interceptor.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\signup.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\services\user.service.ts" />
-    <TypeScriptCompile Include="ClientApp\app\shared\fade-in.animation.ts" />
-    <TypeScriptCompile Include="ClientApp\app\shared\loader.component.ts" />
-    <TypeScriptCompile Include="ClientApp\app\shared\truncate.pipe.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Microsoft.NETCore.App" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
   <!--/-:cnd:noEmit -->
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
@@ -80,11 +64,10 @@
     <!-- In development, the dist files won't exist on the first run or when cloning to
          a different machine, so rebuild them if not already present. -->
     <Message Importance="high" Text="Performing first-run Webpack build..." />
+    <Exec Command="npm install" />
     <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js" />
     <Exec Command="node node_modules/webpack/bin/webpack.js" />
   </Target>
-  <!--/+:cnd:noEmit -->
-
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec Command="npm install" />

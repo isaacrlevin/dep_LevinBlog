@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using LevinBlog.Database.Entity;
 using LevinBlog.Model;
 using LevinBlog.Repository;
-using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LevinBlog.Service
 {
@@ -26,7 +23,7 @@ namespace LevinBlog.Service
 
         public IEnumerable<Post> SearchPosts(string query, int count, int page = 1)
         {
-           return _postRepository.GetQueryPaged(query, count, page).Select(Mapper.Map<PostEntity, Post>).ToList();
+            return _postRepository.GetQueryPaged(query, count, page).Select(Mapper.Map<PostEntity, Post>).ToList();
         }
     }
 }

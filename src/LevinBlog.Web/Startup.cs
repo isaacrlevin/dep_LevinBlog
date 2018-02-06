@@ -1,28 +1,25 @@
-using System.Linq;
-using System;
-using System.IO;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using LevinBlog.Database;
 using LevinBlog.Model;
 using LevinBlog.Repository;
 using LevinBlog.Service;
-using Microsoft.Net.Http.Headers;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Pioneer.Blog.Service;
-using Robotify.AspNetCore;
 using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.ApplicationInsights.AspNetCore;
-using Microsoft.Extensions.Options;
-using Microsoft.ApplicationInsights.SnapshotCollector;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
+using Robotify.AspNetCore;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace LevinBlog.Web
 {
@@ -44,23 +41,9 @@ namespace LevinBlog.Web
 
       host.Run();
     }
-    private class SnapshotCollectorTelemetryProcessorFactory : ITelemetryProcessorFactory
-    {
-      private readonly IServiceProvider _serviceProvider;
-
-      public SnapshotCollectorTelemetryProcessorFactory(IServiceProvider serviceProvider) =>
-          _serviceProvider = serviceProvider;
-
-      public ITelemetryProcessor Create(ITelemetryProcessor next)
-      {
-        var snapshotConfigurationOptions = _serviceProvider.GetService<IOptions<SnapshotCollectorConfiguration>>();
-        return new SnapshotCollectorTelemetryProcessor(next, configuration: snapshotConfigurationOptions.Value);
-      }
-    }
 
     public Startup(IConfiguration config, IHostingEnvironment env)
     {
-
       var configRoot = (IConfigurationRoot)config;
       configRoot.Providers.ToList().Clear();
 
@@ -80,11 +63,6 @@ namespace LevinBlog.Web
       // Add framework services.
       services.AddCors();
       services.AddMvc();
-      services.Configure<SnapshotCollectorConfiguration>(Configuration.GetSection(nameof(SnapshotCollectorConfiguration)));
-
-      // Add SnapshotCollector telemetry processor.
-      services.AddSingleton<ITelemetryProcessorFactory>(sp => new SnapshotCollectorTelemetryProcessorFactory(sp));
-
       services.AddNodeServices();
       services.AddMemoryCache();
       services.AddRobotify(Configuration);
@@ -112,31 +90,37 @@ namespace LevinBlog.Web
       services.AddTransient<ITagService, TagService>();
       services.AddTransient<IUserService, UserService>();
 
-      services.AddAuthentication(options =>
+      // Register the Swagger generator, defining one or more Swagger documents
+      services.AddSwaggerGen(c =>
       {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer(o =>
-      {
-        o.TokenValidationParameters = new TokenValidationParameters
-        {
-          ValidateIssuerSigningKey = true,
-          ValidateIssuer = false,
-          ValidateAudience = false,
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["AppConfiguration:Key"])),
-        };
-        o.Events = new JwtBearerEvents()
-        {
-          OnAuthenticationFailed = c =>
-          {
-            c.NoResult();
-
-            c.Response.StatusCode = 500;
-            c.Response.ContentType = "text/plain";
-            return c.Response.WriteAsync("An error occurred processing your authentication.");
-          }
-        };
+        c.SwaggerDoc("v1", new Info { Title = "LevinBlog", Version = "v1" });
       });
+
+      services.AddAuthentication(options =>
+          {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          }).AddJwtBearer(o =>
+          {
+            o.TokenValidationParameters = new TokenValidationParameters
+            {
+              ValidateIssuerSigningKey = true,
+              ValidateIssuer = false,
+              ValidateAudience = false,
+              IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["AppConfiguration:Key"])),
+            };
+            o.Events = new JwtBearerEvents()
+            {
+              OnAuthenticationFailed = c =>
+          {
+              c.NoResult();
+
+              c.Response.StatusCode = 500;
+              c.Response.ContentType = "text/plain";
+              return c.Response.WriteAsync("An error occurred processing your authentication.");
+            }
+            };
+          });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -149,15 +133,26 @@ namespace LevinBlog.Web
           .AllowAnyHeader()
           .AllowCredentials());
 
-      app.UseStaticFiles(new StaticFileOptions
+      app.UseStaticFiles(new StaticFileOptions()
       {
-        OnPrepareResponse = context =>
+        OnPrepareResponse = c =>
         {
-          var headers = context.Context.Response.GetTypedHeaders();
-          headers.CacheControl = new CacheControlHeaderValue
+                  //Do not add cache to json files. We need to have new versions when we add new translations.
+
+                  if (!c.Context.Request.Path.Value.Contains(".json"))
           {
-            MaxAge = TimeSpan.FromSeconds(31536000)
-          };
+            c.Context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
+            {
+              MaxAge = TimeSpan.FromDays(30) // Cache everything except json for 30 days
+                    };
+          }
+          else
+          {
+            c.Context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
+            {
+              MaxAge = TimeSpan.FromMinutes(15) // Cache json for 15 minutes
+                    };
+          }
         }
       });
 
@@ -173,6 +168,13 @@ namespace LevinBlog.Web
         });
         TelemetryConfiguration.Active.DisableTelemetry = true;
       }
+
+      app.UseSwagger();
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+      });
+
       app.UseRobotify();
       app.UseMvc(routes =>
       {
@@ -193,7 +195,6 @@ namespace LevinBlog.Web
         routes.MapSpaFallbackRoute(
           name: "spa-fallback",
           defaults: new { controller = "Home", action = "Index" });
-
       });
       app.UseExceptionHandler("/Home/Error");
     }

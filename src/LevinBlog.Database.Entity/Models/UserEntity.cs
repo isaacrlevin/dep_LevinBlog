@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LevinBlog.Database.Entity.Models
+﻿namespace LevinBlog.Database.Entity.Models
 {
     public class UserEntity
     {

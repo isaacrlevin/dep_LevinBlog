@@ -4,17 +4,21 @@ using LevinBlog.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LevinBlog.Repository
 {
     public interface IUserRepository
     {
         UserEntity Authenticate(string username, string password);
+
         IEnumerable<UserEntity> GetAll();
+
         UserEntity GetById(int id);
+
         UserEntity Create(UserEntity userEntity, string password);
+
         void Update(User userEntity, string password = null);
+
         void Delete(int id);
     }
 

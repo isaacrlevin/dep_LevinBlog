@@ -1,20 +1,18 @@
-﻿using System;
-using AutoMapper;
-using Microsoft.Extensions.Options;
-
-using LevinBlog.Database;
+﻿using AutoMapper;
 using LevinBlog.Database.Entity;
 using LevinBlog.Model;
 using LevinBlog.Repository;
-using System.Reflection;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System;
 
 namespace LevinBlog.Service
 {
     public interface ICommunicationService
     {
         OperationResult<ContactViewModel> SendContactEmailNotification(ContactViewModel model);
+
         OperationResult<Contact> SignUpToMailingList(SignUpViewModel model);
     }
 
@@ -34,13 +32,11 @@ namespace LevinBlog.Service
         /// </summary>
         public OperationResult<ContactViewModel> SendContactEmailNotification(ContactViewModel model)
         {
-
             //var sender = new SendGridSender(_appConfiguration.Value.SendGridApiKey);
             //Email.DefaultSender = sender;
             //Email.DefaultRenderer = new RazorRenderer();
 
             //var template = "<p>Email From: @Model.Name (@Model.Email)</p><p>Message:</p><p>@Model.Message</p>";
-
 
             //var email = Email.From(_appConfiguration.Value.NoReplyEmail, $"{_appConfiguration.Value.SiteTitle} - Contact")
             //                 .To(_appConfiguration.Value.AdminEmail)

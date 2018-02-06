@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 // Observable class extensions
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
@@ -9,70 +11,79 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 @Component({
-    selector: 'pc-categories-page',
-    templateUrl: './admincategory.component.html'
+  selector: 'pc-categories-page',
+  templateUrl: './admincategory.component.html'
 })
 
 export class AdminCategoryComponent implements OnInit {
-    loading = false;
-    categories: Category[];
-    title: string = 'Manage Categories';
-    selectedCategory: Category;
-    constructor(private categoryService: CategoryService) {
-    }
+  loading = false;
+  modalRef: BsModalRef;
+  categories: Category[];
+  title: string = 'Manage Categories';
+  selectedCategory: Category;
+  constructor(private categoryService: CategoryService, private modalService: BsModalService) {
+  }
 
-    ngOnInit(): void {
-        this.selectedCategory = new Category();
-        this.getAll();
-    }
+  ngOnInit(): void {
+    this.selectedCategory = new Category();
+    this.getAll();
+  }
 
-    create(): void {
-        if (confirm(`Are you sure you want to add "${this.selectedCategory.name}" to the categories list?`)) {
-            this.loading = true;
-            this.categoryService.create(this.selectedCategory)
-                .subscribe(() => {
-                    this.getAll();
-                });
-        }
+  create(): void {
+    if (confirm(`Are you sure you want to add "${this.selectedCategory.name}" to the categories list?`)) {
+      this.loading = true;
+      this.categoryService.create(this.selectedCategory)
+        .subscribe(() => {
+          this.getAll();
+        });
     }
+  }
 
-    selectItem(category: Category): void {
-        this.selectedCategory = category;
-    }
+  selectItem(category: Category): void {
+    this.selectedCategory = category;
+  }
 
-    remove(id: number): void {
-        if (confirm(`Are you sure you want to delete "${this.selectedCategory.name}" from the categories list?`)) {
-            this.loading = true;
-            this.categoryService.delete(id)
-                .subscribe(() => {
-                    this.getAll();
-                });
-        }
-    }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 
-    update(): void {
-        if (confirm(`Are you sure you want to save "${this.selectedCategory.name}" changes`)) {
-            this.loading = true;
-            this.categoryService.update(this.selectedCategory)
-                .subscribe(() => {
-                    this.getAll();
-                });
-        }
-    }
+  closeModal(template: TemplateRef<any>) {
+    this.modalRef.hide();
+  }
 
-    save(): void {
-        if (this.selectedCategory.id === undefined) {
-            this.create();
-        }
-        else { this.update(); }
+  remove(id: number): void {
+    if (confirm(`Are you sure you want to delete "${this.selectedCategory.name}" from the categories list?`)) {
+      this.loading = true;
+      this.categoryService.delete(id)
+        .subscribe(() => {
+          this.getAll();
+        });
     }
+  }
 
-    getAll(): void {
-        this.loading = true;
-        this.categoryService.getAll()
-            .subscribe(categories => {
-                this.categories = categories;
-                this.loading = false;
-            });
+  update(): void {
+    if (confirm(`Are you sure you want to save "${this.selectedCategory.name}" changes`)) {
+      this.loading = true;
+      this.categoryService.update(this.selectedCategory)
+        .subscribe(() => {
+          this.getAll();
+        });
     }
+  }
+
+  save(): void {
+    if (this.selectedCategory.id === undefined) {
+      this.create();
+    }
+    else { this.update(); }
+  }
+
+  getAll(): void {
+    this.loading = true;
+    this.categoryService.getAll()
+      .subscribe(categories => {
+        this.categories = categories;
+        this.loading = false;
+      });
+  }
 }
