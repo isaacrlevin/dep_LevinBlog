@@ -18,7 +18,12 @@ export const metaData = [
   {
     name: 'twitter:domain', content: 'Isaac Levin'
   },
-  { name: 'article:author', content: 'Isaac Levin' }
+  {
+    name: 'article:author', content: 'Isaac Levin'
+  },
+  {
+    name: 'og:image', content: 'http://isaaclevin.com/dist/assets/csotW.jpg'
+  }
 ]
 
 export const routes: Routes = [

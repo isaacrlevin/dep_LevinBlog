@@ -33,10 +33,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.SnapshotCollector" Version="1.0.10" />
-    <PackageReference Include="Robotify.AspNetCore" Version="0.1.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.2.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.SnapshotCollector" Version="1.2.0-pre-20180226.2" />
+    <PackageReference Include="Robotify.AspNetCore" Version="0.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LevinBlog.Database\LevinBlog.Database.csproj" />

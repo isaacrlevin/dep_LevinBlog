@@ -65,7 +65,7 @@ namespace LevinBlog.Web
       services.AddMvc();
       services.AddNodeServices();
       services.AddMemoryCache();
-      services.AddRobotify(Configuration);
+      services.AddRobotify();
       services.AddDbContext<BlogContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("BlogDatabase")));
 
