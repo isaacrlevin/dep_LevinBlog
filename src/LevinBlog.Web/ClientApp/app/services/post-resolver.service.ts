@@ -15,14 +15,14 @@ export class AllPostResolver implements Resolve<Post[]> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Post[]> {
     let id = route.paramMap.get('id');
     this.loadingService.loaded = true;
-    return this.ps.getAll(null, null, true, false, false)
+    return this.ps.getAll(undefined, undefined, true, false, false)
       .map(posts => {
         if (posts) {
           this.loadingService.loaded = true;
           return posts;
         } else { // id not found
           this.router.navigate(['']);
-          return null;
+          return undefined;
         }
       });
   }
@@ -42,7 +42,7 @@ export class PostResolver implements Resolve<Post> {
           return post;
         } else { // id not found
           this.router.navigate(['']);
-          return null;
+          return undefined;
         }
       });
   }
@@ -62,7 +62,7 @@ export class CategoryResolver implements Resolve<Post[]> {
           return posts;
         } else { // id not found
           this.router.navigate(['']);
-          return null;
+          return undefined;
         }
       });
   }
@@ -82,7 +82,7 @@ export class TagResolver implements Resolve<Post[]> {
           return posts;
         } else { // id not found
           this.router.navigate(['']);
-          return null;
+          return undefined;
         }
       });
   }

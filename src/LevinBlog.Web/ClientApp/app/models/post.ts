@@ -6,7 +6,7 @@ export enum PreviousCurrentNextPosition {
   Previous = 0,
   Current,
   Next
-};
+}
 
 export class Post {
   id: number;
@@ -18,9 +18,11 @@ export class Post {
   smallImage: string;
   iconImage: string;
   url: string;
+  published: boolean;
   link: string;
-  postedOn: string;
-  modifedOn: string;
+  createdOn: Date;
+  postedOn: Date;
+  modifiedOn: Date;
   tags: Tag.Tag[];
   article: Article.Article;
   category: Category.Category;

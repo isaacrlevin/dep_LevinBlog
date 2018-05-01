@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject, VERSION } from '@angular/core';
+import { Component, OnInit, VERSION } from '@angular/core';
 import { LoadingService, AboutService } from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
-import { } from 'webpack';
+
 @Component({
   selector: 'app-home',
   templateUrl: './about.component.html',

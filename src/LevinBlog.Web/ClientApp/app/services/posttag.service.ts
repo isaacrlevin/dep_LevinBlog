@@ -1,5 +1,5 @@
 import { Injectable, Inject, Injector } from '@angular/core';
-import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine';
+import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine/tokens';
 import { Observable } from 'rxjs/Observable';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { Tag } from '../models/tag';

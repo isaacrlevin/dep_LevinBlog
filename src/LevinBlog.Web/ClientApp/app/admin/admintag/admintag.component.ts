@@ -1,17 +1,18 @@
+// import 'rxjs/add/observable/of';
+// import 'rxjs/add/operator/catch';
+// import 'rxjs/add/operator/debounceTime';
+// import 'rxjs/add/operator/distinctUntilChanged';
+
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { TagService } from '../../services/tag.service';
-import { Tag } from '../../models/tag';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+
+import { Tag } from '../../models';
+import { TagService } from '../../services';
+
 // Observable class extensions
-import 'rxjs/add/observable/of';
-import { Observable } from 'rxjs/Observable';
 // Observable operators
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
 @Component({
-  selector: 'pc-tags-page',
+  selector: 'app-admin-tags',
   templateUrl: './admintag.component.html'
 })
 
@@ -64,8 +65,7 @@ export class AdminTagComponent implements OnInit {
   save(): void {
     if (this.selectedTag.id === undefined) {
       this.create();
-    }
-    else {
+    } else {
       this.update();
     }
   }

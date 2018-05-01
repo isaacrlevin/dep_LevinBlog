@@ -1,17 +1,17 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { Category } from '../../models/category';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-// Observable class extensions
-import 'rxjs/add/observable/of';
-import { Observable } from 'rxjs/Observable';
-// Observable operators
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+
+// // Observable class extensions
+// import 'rxjs/add/observable/of';
+// import { Observable } from 'rxjs/Observable';
+// // Observable operators
+// import 'rxjs/add/operator/catch';
+// import 'rxjs/add/operator/debounceTime';
+// import 'rxjs/add/operator/distinctUntilChanged';
+import { OnInit, Component, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { Category } from '../../models';
+import { CategoryService } from '../../services';
 @Component({
-  selector: 'pc-categories-page',
+  selector: 'app-admin-categories',
   templateUrl: './admincategory.component.html'
 })
 
@@ -74,8 +74,7 @@ export class AdminCategoryComponent implements OnInit {
   save(): void {
     if (this.selectedCategory.id === undefined) {
       this.create();
-    }
-    else { this.update(); }
+    } else { this.update(); }
   }
 
   getAll(): void {

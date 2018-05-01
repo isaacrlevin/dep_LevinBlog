@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'admin-menu',
+  selector: 'app-admin-menu',
   templateUrl: './adminmenu.component.html',
   styleUrls: ['./adminmenu.component.scss']
 })

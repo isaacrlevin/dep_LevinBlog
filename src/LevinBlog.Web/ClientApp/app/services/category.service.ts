@@ -1,5 +1,5 @@
 import { Injectable, Inject, Injector } from '@angular/core';
-import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine';
+import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine/tokens';
 import { Observable } from 'rxjs/Observable';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { Category } from '../models/index';
@@ -27,7 +27,7 @@ export class CategoryService {
   create(category: Category): Observable<Category> {
     return this.http
       .post(this.url, category)
-      .catch(this.handleError)
+      .catch(this.handleError);
   }
 
   update(category: Category): Observable<void> {

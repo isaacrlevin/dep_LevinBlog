@@ -1,7 +1,7 @@
 import { Injectable, Inject, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine';
+import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine/tokens';
 @Injectable()
 export class AboutService {
   private url = '/api/about';

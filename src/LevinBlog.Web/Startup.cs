@@ -1,3 +1,4 @@
+using ApplicationInsightsTelemetryExtensions;
 using LevinBlog.Database;
 using LevinBlog.Model;
 using LevinBlog.Repository;
@@ -63,6 +64,14 @@ namespace LevinBlog.Web
       // Add framework services.
       services.AddCors();
       services.AddMvc();
+
+
+
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+      services.AddSingleton<ITelemetryInitializer, RequestBodyInitializer>();
+
+
+
       services.AddNodeServices();
       services.AddMemoryCache();
       services.AddRobotify();
@@ -90,6 +99,13 @@ namespace LevinBlog.Web
       services.AddTransient<ITagService, TagService>();
       services.AddTransient<IUserService, UserService>();
 
+      //  var telemetryConfiguration =
+      //services.BuildServiceProvider().GetService<TelemetryConfiguration>();
+
+      var telemetryConfiguration = TelemetryConfiguration.Active;
+      var builder = telemetryConfiguration.TelemetryProcessorChainBuilder;
+      builder.Use((next) => new NotFoundProcessor(next));
+
       // Register the Swagger generator, defining one or more Swagger documents
       services.AddSwaggerGen(c =>
       {
@@ -113,12 +129,12 @@ namespace LevinBlog.Web
             {
               OnAuthenticationFailed = c =>
           {
-              c.NoResult();
+            c.NoResult();
 
-              c.Response.StatusCode = 500;
-              c.Response.ContentType = "text/plain";
-              return c.Response.WriteAsync("An error occurred processing your authentication.");
-            }
+            c.Response.StatusCode = 500;
+            c.Response.ContentType = "text/plain";
+            return c.Response.WriteAsync("An error occurred processing your authentication.");
+          }
             };
           });
     }
@@ -137,30 +153,37 @@ namespace LevinBlog.Web
       {
         OnPrepareResponse = c =>
         {
-                  //Do not add cache to json files. We need to have new versions when we add new translations.
+          //Do not add cache to json files. We need to have new versions when we add new translations.
 
-                  if (!c.Context.Request.Path.Value.Contains(".json"))
+          if (!c.Context.Request.Path.Value.Contains(".json"))
           {
             c.Context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
             {
               MaxAge = TimeSpan.FromDays(30) // Cache everything except json for 30 days
-                    };
+            };
           }
           else
           {
             c.Context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
             {
               MaxAge = TimeSpan.FromMinutes(15) // Cache json for 15 minutes
-                    };
+            };
           }
         }
       });
+
+
+      app.UseDeveloperExceptionPage();
+
+
+
+
 
       ServiceMapperConfig.Config();
       app.UseAuthentication();
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        
         app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
         {
           HotModuleReplacement = true,

@@ -3,4 +3,6 @@ export class Tag {
   name: string;
   url: string;
   isActive = false;
+  createdOn: Date;
+  modifiedOn: Date;
 }

@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy, Inject, ViewEncapsulation, RendererFactory2, PLATFORM_ID } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute, PRIMARY_OUTLET } from '@angular/router';
-import { Meta, Title, DOCUMENT, MetaDefinition } from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Subscription';
-import { isPlatformServer, isPlatformBrowser } from '@angular/common';
-import { LinkService } from '../services/link.service';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, Inject, PLATFORM_ID } from '@angular/core';
+import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Title, Meta } from '@angular/platform-browser';
+import { LinkService } from '../services';
+import { isPlatformBrowser } from '@angular/common';
+
 
 @Component({
-  selector: 'admin',
+  selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
   encapsulation: ViewEncapsulation.None

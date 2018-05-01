@@ -1,20 +1,17 @@
-import { NgModule, Inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CommonModule, APP_BASE_HREF } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+// tslint:disable-next-line:max-line-length
 import { AuthenticationService, AboutService, SearchService, LoadingService, LinkService, CategoryService, PostService, PostTagService, SignupService, UserService, AlertService, TagService, JWTInterceptor } from '../services/index';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
-import { TransferHttpCacheModule } from '@nguniversal/common';
 @NgModule({
   declarations: [
   ],
   imports: [
     CommonModule,
     HttpClientModule,
-    FormsModule,
-    RouterModule
+    FormsModule
   ],
   providers: [
     AuthenticationService,
@@ -37,10 +34,7 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
   ],
   exports: [
     HttpClientModule,
-    TransferHttpCacheModule,
-    BrowserTransferStateModule,
-    FormsModule,
-    RouterModule,
+    FormsModule
   ]
 })
 export class CoreModule {

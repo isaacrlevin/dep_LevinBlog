@@ -7,6 +7,7 @@ $fa-font-path: "~font-awesome/fonts";
    Note: This Component has ViewEncapsulation.None so the styles will bleed out
 
 */
+
 html, body {
   height: 100%;
   margin: 0;
@@ -55,6 +56,24 @@ footer .copyright {
   overflow: auto;
 }
 
+.hljs {
+  background-attachment: local;
+  overflow-x: scroll;
+
+}
+::-moz-scrollbar-button, ::-webkit-scrollbar-button {
+  width: 0px;
+}
+
+.wrap
+{
+  //display:table;
+  //white-space: nowrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
 body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333333;

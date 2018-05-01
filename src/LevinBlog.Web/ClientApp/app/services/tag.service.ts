@@ -1,5 +1,5 @@
 import { Injectable, Inject, Injector } from '@angular/core';
-import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine';
+import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine/tokens';
 import { Observable } from 'rxjs/Observable';
 import { Tag } from '../models/tag';
 import { HttpParams, HttpClient } from '@angular/common/http';
@@ -26,7 +26,7 @@ export class TagService {
   create(tag: Tag): Observable<Tag> {
     return this.http
       .post(`${this.baseUrl}${this.url}`, tag)
-      .catch(this.handleError)
+      .catch(this.handleError);
   }
 
   update(tag: Tag): Observable<void> {

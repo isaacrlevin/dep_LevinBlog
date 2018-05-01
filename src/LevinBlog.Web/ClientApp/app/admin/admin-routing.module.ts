@@ -1,11 +1,12 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { AdminPostComponent } from './adminpost/adminpost.component';
-import { AdminTagComponent } from './admintag/admintag.component';
-import { AdminHomeComponent } from './adminhome/adminhome.component';
-import { AdminCategoryComponent } from './admincategory/admincategory.component';
 import { AuthGuard } from './auth.guard';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AdminTagComponent } from './admintag/admintag.component';
+import { AdminCategoryComponent } from './admincategory/admincategory.component';
+import { AdminPostComponent } from './adminpost/adminpost.component';
+import { AdminHomeComponent } from './adminhome/adminhome.component';
+
 export const routes: Routes = [
   {
     path: '',

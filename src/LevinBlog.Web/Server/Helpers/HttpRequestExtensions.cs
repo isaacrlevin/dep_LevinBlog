@@ -39,10 +39,10 @@ namespace LevinBlog.Web.Helpers
       // By default we're passing down Cookies, Headers, Host from the Request object here
       TransferData transferData = new TransferData();
       transferData.request = Request.AbstractRequestInfo();
-      if (!Debugger.IsAttached)
-      {
+      //if (!Debugger.IsAttached)
+      //{
         transferData.appInsightsId = appSettings.AppInsightsId;
-      }
+      //}
 
       //Prerender now needs CancellationToken
       System.Threading.CancellationTokenSource cancelSource = new System.Threading.CancellationTokenSource();

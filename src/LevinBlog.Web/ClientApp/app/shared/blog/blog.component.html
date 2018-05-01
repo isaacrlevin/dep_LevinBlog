@@ -3,7 +3,7 @@
     <div class="row" *ngFor="let post of posts">
       <div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-preview">
-          <a href="/post/{{post.url}}">
+          <a [routerLink]="['/post', post.url]">
             <h2 class="post-title">
               {{post.title}}
             </h2>
@@ -20,10 +20,4 @@
   <div *ngIf="posts.length == 0" style="text-align:center">
     <h1>No Posts Found</h1>
   </div>
-  <!-- Pager -->
-  <!--<ul class="pager">
-    <li class="next">
-      <a href="#">Older Posts &rarr;</a>
-    </li>
-  </ul>-->
 </div>

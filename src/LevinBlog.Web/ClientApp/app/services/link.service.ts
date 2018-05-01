@@ -12,12 +12,12 @@ import { isPlatformServer } from '@angular/common';
 
 @Injectable()
 export class LinkService {
-  private isServer: boolean = isPlatformServer(this.platform_id);
+  private isServer: boolean = isPlatformServer(this.platformId);
 
   constructor(
     private rendererFactory: RendererFactory2,
     @Inject(DOCUMENT) private document,
-    @Inject(PLATFORM_ID) private platform_id
+    @Inject(PLATFORM_ID) private platformId
   ) {
   }
 

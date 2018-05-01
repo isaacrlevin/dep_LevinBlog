@@ -268,3 +268,5 @@ src/LevinBlog.Web/appsettings.Production.json
 /src/LevinBlog.Web/package-lock.json
 /.vscode
 /src/LevinBlog.Web/ClientApp/dist
+src/LevinBlog.Web/.vscode
+src/.vscode

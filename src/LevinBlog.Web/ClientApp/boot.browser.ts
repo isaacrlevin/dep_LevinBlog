@@ -12,5 +12,9 @@ if (module['hot']) {
 } else {
   enableProdMode();
 }
-
-const modulePromise = platformBrowserDynamic().bootstrapModule(AppModule);
+var modulePromise;
+document.addEventListener("DOMContentLoaded", function () {
+  modulePromise = platformBrowserDynamic()
+    .bootstrapModule(AppModule)
+    .catch(function (err) { return console.log(err); });
+});

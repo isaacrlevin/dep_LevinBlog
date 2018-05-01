@@ -1,6 +1,6 @@
 import { Injectable, Inject, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine';
+import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine/tokens';
 import 'rxjs/add/operator/map';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 @Injectable()

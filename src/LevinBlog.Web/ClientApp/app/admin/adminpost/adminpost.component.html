@@ -16,7 +16,7 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Name</th>
+                                    <th>Title</th>
                                     <th>Url</th>
                                     <th>Created Date</th>
                                     <th>Last Modified</th>
@@ -28,14 +28,14 @@
                                         <button type="button" (click)="selectPost(post)">
                       <i class="fa fa-fw fa-edit"></i>
                     </button>
-                                        <button type="button" (click)="remove(post.id)">
+                                        <button type="button" (click)="deleteRecord(post.id)">
                       <i class="fa fa-fw fa-trash"></i>
                     </button>
                                         <button type="button" (click)="helpWindow(post)">
                       <i class="fa fa-fw fa-eye"></i>
                     </button>
                                     </td>
-                                    <td>{{post.name}}</td>
+                                    <td>{{post.title}}</td>
                                     <td>{{post.url}}</td>
                                     <td>{{post.createdOn | date: 'shortDate'}}</td>
                                     <td>{{post.modifiedOn | date: 'shortDate'}}</td>

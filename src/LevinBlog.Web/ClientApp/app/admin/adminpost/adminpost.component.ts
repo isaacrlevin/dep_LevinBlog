@@ -1,19 +1,13 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, OnInit, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+
+import { Article, Category, Post, Tag, Excerpt } from '../../models';
+import { CategoryService, PostService, TagService, PostTagService } from '../../services';
+
 import 'ckeditor';
-import { PLATFORM_ID } from '@angular/core';
-import { PostService } from '../../services/post.service';
-import { CategoryService } from '../../services//category.service';
-import { TagService } from '../../services/tag.service';
-import { PostTagService } from '../../services/posttag.service';
-import { Category } from '../../models/category';
-import { Tag } from '../../models/tag';
-import { Post } from '../../models/post';
-import { Article } from '../../models/article';
-import { Excerpt } from '../../models/excerpt';
 declare var CKEDITOR: any;
 @Component({
-  selector: 'pc-posts-page',
+  selector: 'app-admin-posts',
   templateUrl: './adminpost.component.html'
 })
 
@@ -27,17 +21,17 @@ export class AdminPostComponent implements OnInit {
   countPerPage = 10;
   currentPageIndex = 1;
   totalItemsInCollection = 0;
-  public ckeditorContent: string = '<p>Hello CKEditor</p>';
   public config = {
     uiColor: '#F0F3F4',
     height: '600',
     allowedContent: {}
-  }
+  };
   title: string = 'Manage Posts';
   constructor(public postService: PostService,
     public categoryService: CategoryService,
     public posttagService: PostTagService,
-    public tagService: TagService, @Inject(PLATFORM_ID) private platformId: Object) {
+    public tagService: TagService, 
+    @Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   helpWindow(post) {
@@ -49,8 +43,7 @@ export class AdminPostComponent implements OnInit {
       this.selectedPost = new Post();
       this.selectedPost.article = new Article();
       this.selectedPost.excerpt = new Excerpt();
-    }
-    else {
+    } else {
       this.selectedPost = post;
     }
     this.showEdit = true;
@@ -61,16 +54,15 @@ export class AdminPostComponent implements OnInit {
       window['CKEDITOR_BASEPATH'] = '//cdn.ckeditor.com/4.6.0/full/';
 
       this.config.
-        allowedContent = {
-          script: true,
-          $1: {
-            // This will set the default set of elements
-            elements: CKEDITOR.dtd,
-            attributes: true,
-            styles: true,
-            classes: true
-          }
-        }
+       allowedContent = {
+         script: true,
+         $1: {
+           elements: CKEDITOR.dtd,
+           attributes: true,
+           styles: true,
+           classes: true
+         }
+       };
     }
     this.loading = true;
     this.getAllCategories();
@@ -174,7 +166,7 @@ export class AdminPostComponent implements OnInit {
       return;
     }
 
-    this.removeTag(tag)
+    this.removeTag(tag);
     this.loading = false;
   }
 

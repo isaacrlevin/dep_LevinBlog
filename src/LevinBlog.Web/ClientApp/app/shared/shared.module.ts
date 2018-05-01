@@ -9,8 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { CollapseModule, ModalModule } from 'ngx-bootstrap';
 import { HighlightJsService } from 'angular2-highlight-js';
 import { FormsModule } from '@angular/forms';
-import { BrowserTransferStateModule } from '@angular/platform-browser';
-import { TransferHttpCacheModule } from '@nguniversal/common';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     BlogComponent,
@@ -23,8 +22,7 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
   imports: [
     CommonModule,
     FormsModule,
-    TransferHttpCacheModule,
-    BrowserTransferStateModule
+    RouterModule
   ],
   providers: [
     HighlightJsService
@@ -36,7 +34,8 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
     BlogComponent,
     FooterComponent,
     LoaderComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    RouterModule
   ]
 })
 export class SharedModule { }

@@ -35,11 +35,11 @@ namespace LevinBlog.Web.Controllers
       ViewData["Links"] = prerenderResult.Globals["links"]; // set our <link rel="canonical"> etc SEO tags
       ViewData["TransferData"] = prerenderResult.Globals["transferData"]; // our transfer data set to window.TRANSFER_CACHE = {};
 
-      if (!Debugger.IsAttached)
-      {
+      //if (!Debugger.IsAttached)
+      //{
         ViewData["GoogleAnalyticsId"] = _appSettings.GoogleAnalyticsId;
         ViewData["AppInsightsId"] = _appSettings.AppInsightsId;
-      }
+      //}
       return View();
     }
 

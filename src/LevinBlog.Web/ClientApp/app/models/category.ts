@@ -3,4 +3,6 @@ export class Category {
   name: string;
   url: string;
   isActive: boolean;
+  createdOn: Date;
+  modifiedOn: Date;
 }
