@@ -144,6 +144,8 @@ export class AdminPostComponent implements OnInit {
             this.loading = false;
           });
       }
+
+      this.getAllPosts();
     }
     this.showEdit = false;
   }

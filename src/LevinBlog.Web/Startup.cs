@@ -7,53 +7,30 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Net.Http.Headers;
+
 using Robotify.AspNetCore;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 
 namespace LevinBlog.Web
 {
   public class Startup
   {
-    public static void Main()
+    public Startup(IConfiguration configuration)
     {
-      var host = new WebHostBuilder()
-          .UseKestrel()
-            .ConfigureLogging(factory =>
-            {
-              factory.AddConsole();
-              factory.AddDebug();
-            })
-          .UseContentRoot(Directory.GetCurrentDirectory())
-          .UseIISIntegration()
-          .UseStartup<Startup>()
-          .Build();
-
-      host.Run();
-    }
-
-    public Startup(IConfiguration config, IHostingEnvironment env)
-    {
-      var configRoot = (IConfigurationRoot)config;
-      configRoot.Providers.ToList().Clear();
-
-      var builder = new ConfigurationBuilder()
-           .SetBasePath(env.ContentRootPath)
-           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-           .AddEnvironmentVariables();
-      Configuration = builder.Build();
+      Configuration = configuration;
     }
 
     public IConfiguration Configuration { get; }
@@ -63,7 +40,18 @@ namespace LevinBlog.Web
     {
       // Add framework services.
       services.AddCors();
-      services.AddMvc();
+
+      services.Configure<CookiePolicyOptions>(options =>
+      {
+        // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+        options.CheckConsentNeeded = context => true;
+        options.MinimumSameSitePolicy =  Microsoft.AspNetCore.Http.SameSiteMode.None;
+      });
+
+
+      services.AddMvc()
+          .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
 
 
 
@@ -105,6 +93,8 @@ namespace LevinBlog.Web
       var telemetryConfiguration = TelemetryConfiguration.Active;
       var builder = telemetryConfiguration.TelemetryProcessorChainBuilder;
       builder.Use((next) => new NotFoundProcessor(next));
+      builder.Use((next) => new BotRequestTracking(next));
+
 
       // Register the Swagger generator, defining one or more Swagger documents
       services.AddSwaggerGen(c =>
@@ -183,7 +173,7 @@ namespace LevinBlog.Web
       app.UseAuthentication();
       if (env.IsDevelopment())
       {
-        
+
         app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
         {
           HotModuleReplacement = true,
@@ -191,6 +181,11 @@ namespace LevinBlog.Web
         });
         TelemetryConfiguration.Active.DisableTelemetry = true;
       }
+      else
+      {
+        app.UseHsts();
+      }
+
 
       app.UseSwagger();
       app.UseSwaggerUI(c =>
@@ -199,6 +194,8 @@ namespace LevinBlog.Web
       });
 
       app.UseRobotify();
+      app.UseHttpsRedirection();
+      app.UseCookiePolicy();
       app.UseMvc(routes =>
       {
         routes.MapRoute(
@@ -220,6 +217,7 @@ namespace LevinBlog.Web
           defaults: new { controller = "Home", action = "Index" });
       });
       app.UseExceptionHandler("/Home/Error");
+
     }
   }
 }

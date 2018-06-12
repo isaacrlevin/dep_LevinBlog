@@ -1,11 +1,11 @@
-﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
+<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework Condition="'$(TargetFrameworkOverride)' == ''">netcoreapp2.0</TargetFramework>
     <TargetFramework Condition="'$(TargetFrameworkOverride)' != ''">TargetFrameworkOverride</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <IsPackable>false</IsPackable>
     <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <Configurations>Debug;Production</Configurations>
     <ApplicationInsightsResourceId>/subscriptions/a07802f5-f8df-47d8-9b88-79ba55cfb396/resourcegroups/LevinBlog/providers/microsoft.insights/components/LevinBlog</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/a07802f5-f8df-47d8-9b88-79ba55cfb396/resourcegroups/LevinBlog/providers/microsoft.insights/components/LevinBlog</ApplicationInsightsAnnotationResourceId>
@@ -24,13 +24,11 @@
     <Content Remove="ClientApp\**" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFrameworkOverride)' == ''">
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="package-lock.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ApplicationInsightsTelemetryExtensions" Version="0.2.0" />
@@ -48,9 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
-  </ItemGroup>
-<ItemGroup>
-    <PackageReference Update="Microsoft.NETCore.App" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
