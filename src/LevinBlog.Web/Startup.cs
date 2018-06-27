@@ -145,22 +145,16 @@ namespace LevinBlog.Web
         {
           //Do not add cache to json files. We need to have new versions when we add new translations.
 
-          if (!c.Context.Request.Path.Value.Contains(".json"))
-          {
-            c.Context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
+          c.Context.Response.GetTypedHeaders().CacheControl = !c.Context.Request.Path.Value.Contains(".json")
+            ? new CacheControlHeaderValue()
             {
               MaxAge = TimeSpan.FromDays(30) // Cache everything except json for 30 days
-            };
-          }
-          else
-          {
-            c.Context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
+            }
+            : new CacheControlHeaderValue()
             {
               MaxAge = TimeSpan.FromMinutes(15) // Cache json for 15 minutes
             };
-          }
-        }
-      });
+        }      });
 
 
       app.UseDeveloperExceptionPage();

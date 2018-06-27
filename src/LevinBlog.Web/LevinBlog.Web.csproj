@@ -9,6 +9,8 @@
     <Configurations>Debug;Production</Configurations>
     <ApplicationInsightsResourceId>/subscriptions/a07802f5-f8df-47d8-9b88-79ba55cfb396/resourcegroups/LevinBlog/providers/microsoft.insights/components/LevinBlog</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/a07802f5-f8df-47d8-9b88-79ba55cfb396/resourcegroups/LevinBlog/providers/microsoft.insights/components/LevinBlog</ApplicationInsightsAnnotationResourceId>
+    <UserSecretsId>c71df131-ecd9-42b6-aed1-fe6212351878</UserSecretsId>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
    <ItemGroup>
     <!-- Files not to show in IDE -->
@@ -25,18 +27,18 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFrameworkOverride)' == ''">
     <PackageReference Include="Microsoft.AspNetCore.App" />
-     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
+     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="package-lock.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ApplicationInsightsTelemetryExtensions" Version="0.2.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.3.0-beta1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.SnapshotCollector" Version="1.2.2-pre-20180417.9" />
-    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="2.0.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.3.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.SnapshotCollector" Version="1.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="2.1.1" />
     <PackageReference Include="Robotify.AspNetCore" Version="0.2.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.5.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LevinBlog.Database\LevinBlog.Database.csproj" />
