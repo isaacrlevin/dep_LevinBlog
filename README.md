@@ -2,9 +2,9 @@
 Code for blog located at isaaclevin.com
 
 Current stack...
-- ASP.NET Core 2.0
-- Entity Framework Core 2.0
-- Angular 4.0.0
+- ASP.NET Core 2.1
+- Entity Framework Core 2.1
+- Angular 5.2.10
 - Bootstrap 4
 - Webpack 2.2.0
 
